@@ -1,0 +1,188 @@
+    property var lastDispatch: []
+    function recordDispatch(command) { lastDispatch = command }
+    function check(value, message) { if (!value) throw new Error(message) }
+    function find(name) { return results.findIndex(function(e) { return e.name === name }) }
+    Timer { interval: 200; running: true; onTriggered: root.open("{}") }
+    TestCase {
+        name: "LauncherIntegration"
+        when: root.opened
+        function init() { root.viModeEnabled = true; root.open("{}"); wait(50) }
+        function test_menu() {
+
+            root.open("{}")
+            check(find("Apps") >= 0 && find("Learn") >= 0 && find("Trigger") >= 0 && find("Style") >= 0 && find("Setup") >= 0, "Root categories")
+            console.log("TEST root categories:", results.map(function(e) { return e.name }).join(", "))
+            root.launch(find("Apps"))
+            check(root.opened && root.activeMenu === "apps" && results.length > 0, "Apps drilldown")
+            var app = results[0]
+            check(app.kind === "app", "Application row type")
+            root.moveSelection(99999)
+            check(appList.currentIndex === results.length - 1, "Navigation bottom")
+            root.moveSelection(-99999)
+            check(appList.currentIndex === 0, "Navigation top")
+            root.goBack()
+            check(root.activeMenu === "root" && results[appList.currentIndex].name === "Apps", "Back restores selection")
+            searchField.text = app.name.toUpperCase()
+            check(results.some(function(e) { return e.appId === app.appId && e.comment.indexOf("Apps") >= 0 }), "Global app search and breadcrumb")
+            root.launch(results.findIndex(function(e) { return e.appId === app.appId }))
+            check(!root.opened && lastDispatch[3] === "uwsm-app" && lastDispatch[6] === app.appId + ".desktop", "App launch dispatch")
+            root.open("{}")
+            searchField.text = "screenshot"
+            var screenshot = results.findIndex(function(e) { return e.id === "trigger.capture.screenshot" })
+            check(screenshot >= 0 && results[screenshot].comment.indexOf("Trigger › Capture") >= 0, "Nested action search")
+            root.launch(screenshot)
+            check(!root.opened && lastDispatch[3] === "bash" && lastDispatch[5] === "omarchy-capture-screenshot", "Action dispatch mocked")
+            root.open("{}")
+            root.launch(find("Learn"))
+            searchField.text = "screenshot"
+            check(results.length === 0 && appList.currentIndex === -1, "Submenu search scope")
+            root.launch(-1)
+            check(root.opened, "No match Enter ignored")
+            root.goBack()
+            searchField.text = "capture"
+            root.launch(results.findIndex(function(e) { return e.id === "trigger.capture" }))
+            check(root.activeMenu === "trigger.capture", "Enter category from search")
+            root.goBack()
+            check(searchField.text === "capture" && root.activeMenu === "root", "Search history restored")
+            catalog.whenResults = {"trigger.hardware.laptop-display": false}
+            searchField.text = "laptop display"
+            check(!results.some(function(e) { return e.id === "trigger.hardware.laptop-display" }), "Guard hides action")
+            catalog.mergeProviderRows("Fira Code\tFira Code\tFira Code\nFira-Code\tFira-Code\tFira Code", "style.font", "fonts")
+            check(catalog.itemOrder.filter(function(id) { return catalog.item(id).parent === "style.font" }).length === 2, "Provider collision preserves both fonts")
+            check(catalog.shellQuote("a'b") === "'a'\\''b'", "Provider shell quoting")
+            root.close()
+            root.open("{}")
+            check(root.activeMenu === "root" && searchField.text === "", "Reopen reset")
+            console.log("PASS category navigation, app/action search, scoped search, breadcrumbs, history, guard filtering, provider merge, safe dispatch and reset")
+            var covered = 0
+            for (var id of catalog.itemOrder) {
+                var entry = catalog.item(id)
+                if (id === "root" || entry.kind === "app") continue
+                var description = MenuDescriptions.describe(entry)
+                check(description && description !== "Run " + entry.label && description !== "Browse " + entry.label + " options", "Missing description: " + id)
+                covered++
+            }
+            check(MenuDescriptions.describe({id: "style.theme", description: "My own description"}) === "My own description", "User description takes priority")
+            check(MenuDescriptions.describe({id: "apps.example", kind: "app", description: "Original app description"}) === "Original app description", "App description preserved")
+            searchField.text = "special characters"
+            check(results.some(function(e) { return e.id === "setup.config.xcompose" }), "Search description words")
+            root.open("{}")
+            check(results.find(function(e) { return e.id === "style" }).comment === MenuDescriptions.describe(catalog.item("style")), "Category subtitle shown")
+            console.log("PASS descriptions for", covered, "menu/provider entries, source precedence and description search")
+        }
+        function test_link_navigation() {
+            try {
+            verify(catalog.acceptSource('{"shortcut":{"label":"Shortcut","target":"shortcut2"},"shortcut2":{"label":"Shortcut Two","target":"learn"}}', true))
+            root.launch(find("Shortcut"))
+            compare(root.activeMenu, "learn")
+            root.goBack()
+            compare(root.activeMenu, "root")
+            } finally { catalog.acceptSource('{}', true) }
+        }
+        function test_modes() {
+            searchField.forceActiveFocus()
+            wait(100)
+            verify(searchField.activeFocus)
+            compare(root.insertMode, false)
+            compare(searchField.readOnly, true)
+            keyClick(Qt.Key_J)
+            compare(appList.currentIndex, 1)
+            keyClick(Qt.Key_K)
+            compare(appList.currentIndex, 0)
+            compare(searchField.text, "")
+            keyClick(Qt.Key_L)
+            compare(root.activeMenu, "apps")
+            keyClick(Qt.Key_H)
+            compare(root.activeMenu, "root")
+            keyClick(Qt.Key_X)
+            compare(searchField.text, "")
+            keyClick(Qt.Key_I)
+            compare(root.insertMode, true)
+            compare(searchField.text, "")
+            for (var key of [Qt.Key_H, Qt.Key_J, Qt.Key_K, Qt.Key_L, Qt.Key_Q]) keyClick(key)
+            compare(searchField.text, "hjklq")
+            verify(root.opened)
+            keyClick(Qt.Key_Left)
+            keyClick(Qt.Key_Backspace)
+            compare(searchField.text, "hjkq")
+            keyClick(Qt.Key_Escape)
+            verify(root.opened)
+            compare(root.insertMode, false)
+            compare(searchField.text, "hjkq")
+            keyClick(Qt.Key_J)
+            compare(searchField.text, "hjkq")
+            keyClick(Qt.Key_I)
+            keyClick(Qt.Key_A, Qt.ControlModifier)
+            keyClick(Qt.Key_Backspace)
+            compare(searchField.text, "")
+            keyClick(Qt.Key_Backspace)
+            compare(root.activeMenu, "root")
+            keyClick(Qt.Key_Escape)
+            keyClick(Qt.Key_L)
+            compare(root.activeMenu, "apps")
+            compare(root.insertMode, false)
+            keyClick(Qt.Key_Q)
+            compare(root.opened, false)
+            root.open("{}")
+            wait(50)
+            compare(root.insertMode, false)
+            compare(searchField.text, "")
+            keyClick(Qt.Key_Slash)
+            compare(root.insertMode, true)
+            compare(searchField.text, "")
+            keyClick(Qt.Key_Escape)
+            keyClick(Qt.Key_Escape)
+            compare(root.opened, false)
+            console.log("PASS vi normal/insert key events")
+        }
+        function test_toggle_and_theme() {
+            root.viModeEnabled = false
+            root.open("{}")
+            wait(50)
+            compare(searchField.readOnly, false)
+            for (var key of [Qt.Key_I, Qt.Key_H, Qt.Key_J, Qt.Key_K, Qt.Key_L, Qt.Key_Q]) keyClick(key)
+            compare(searchField.text, "ihjklq")
+            verify(root.opened)
+            keyClick(Qt.Key_Escape)
+            compare(root.opened, false)
+            root.open("{}")
+            wait(50)
+            keyClick(Qt.Key_Return)
+            compare(root.activeMenu, "apps")
+            compare(searchField.readOnly, false)
+            keyClick(Qt.Key_Q)
+            compare(searchField.text, "q")
+            keyClick(Qt.Key_Left, Qt.AltModifier)
+            compare(root.activeMenu, "root")
+            compare(searchField.readOnly, false)
+            root.viModeEnabled = true
+            compare(searchField.readOnly, true)
+            keyClick(Qt.Key_J)
+            compare(searchField.text, "")
+
+            // Update the same singleton used by shell theme IPC, in this isolated process only.
+            Color.loadUserShell("")
+            Color.loadColors('foreground = "#eeeeee"\nbackground = "#111111"\naccent = "#77aaff"')
+            Color.loadShell('[menu]\nbackground = "#112233"\ntext = "#eeeeee"\nselected-background = "#334455"\nselected-background-alpha = 1\nselected-text = "#77aaff"\nborder = "#445566"')
+            wait(10)
+            compare(String(card.color), "#112233")
+            compare(String(searchField.color), "#eeeeee")
+            compare(String(appList.currentItem.color), "#334455")
+            Color.loadColors('foreground = "#111111"\nbackground = "#ffffff"\naccent = "#2244aa"')
+            Color.loadShell('[menu]\nbackground = "#ffffff"\ntext = "#111111"\nselected-background = "#ddeeff"\nselected-background-alpha = 1\nselected-text = "#2244aa"\nborder = "#667788"')
+            wait(10)
+            compare(String(card.color), "#ffffff")
+            compare(String(searchField.color), "#111111")
+            compare(String(appList.currentItem.color), "#ddeeff")
+            compare(String(backButton.background.border.color), "#667788")
+            compare(String(scrollBar.contentItem.color), "#2244aa")
+            compare(searchField.selectionColor, Color.menu.selectedBackground)
+            compare(root.secondaryText, Util.alpha(Color.menu.text, 0.65))
+            console.log("PASS vi disabled/enabled key events and live dark-to-light theme bindings")
+        }
+        function cleanupTestCase() {
+            console.log("OMARCTALIA_TEST_RESULT=" + JSON.stringify({failed: qtest_results.failCount, passed: qtest_results.passCount}))
+            Qt.quit()
+        }
+    }
+}

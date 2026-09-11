@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "omarctalia.launcher",
+  "name": "Omarctalia Launcher",
+  "version": "1.0.0",
+  "author": "Steve",
+  "description": "A searchable category menu and application launcher for Omarchy",
+  "kinds": [
+    "menu"
+  ],
+  "entryPoints": {
+    "menu": "Launcher.qml"
+  }
+}
