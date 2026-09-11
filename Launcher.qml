@@ -184,13 +184,15 @@ Item {
             enterMenu(entry.target || entry.id)
             return
         }
-        var command = entry.kind === "app" ? ["uwsm-app", "--", "gtk-launch", entry.appId + ".desktop"] :
-                      (entry.action ? ["bash", "-lc", entry.action] : [])
-        if (!command.length) return
-        var runner = decodeURIComponent(Qt.resolvedUrl("run-action.sh").toString().replace(/^file:\/\//, ""))
+        var mode = entry.kind === "app" ? "app" : "action"
+        var value = entry.kind === "app" ? entry.appId : entry.id
+        if (entry.action && /^(fonts|power-profiles):/.test(entry.action)) {
+            mode = entry.action.split(":")[0]
+            value = entry.action.substring(mode.length + 1)
+        }
+        var broker = decodeURIComponent(Qt.resolvedUrl("command-broker.py").toString().replace(/^file:\/\//, ""))
         close()
-        // The supervisor reports command failures without killing long-running apps.
-        Quickshell.execDetached(["bash", runner, entry.name].concat(command))
+        Quickshell.execDetached(["/usr/bin/python3", "-I", broker, mode, value])
     }
 
     IconResolver { id: iconResolver }

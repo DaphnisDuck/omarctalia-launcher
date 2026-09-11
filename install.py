@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Install only runtime files, preserving vi settings and a restorable snapshot."""
 import argparse
 from datetime import datetime, timezone
@@ -12,13 +12,13 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent
-FILES = ['MenuModel.js','MenuDescriptions.js','IconResolver.qml','run-action.sh',
+FILES = ['MenuModel.js','MenuDescriptions.js','IconResolver.qml','command-broker.py','CommandPolicy.json','CommandPolicy.js',
          'MenuCatalog.qml','Launcher.qml','manifest.json','LICENSE','LICENSE-OMARCHY','UPSTREAM.md']
 
 def digest(data): return hashlib.sha256(data).hexdigest()
 
 def check():
-    missing=[name for name in ['quickshell','bash','timeout','find','uwsm-app','gtk-launch','notify-send','logger'] if not shutil.which(name)]
+    missing=[name for name in ['quickshell','python3','timeout','uwsm-app','gtk-launch','notify-send'] if not os.access('/usr/bin/'+name, os.X_OK)]
     if missing: raise RuntimeError('Missing commands: '+', '.join(missing))
     commons=Path('/usr/share/omarchy/shell/Commons')
     for name in ['qmldir','Color.qml','Util.qml']:

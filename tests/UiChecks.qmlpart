@@ -25,13 +25,13 @@
             searchField.text = app.name.toUpperCase()
             check(results.some(function(e) { return e.appId === app.appId && e.comment.indexOf("Apps") >= 0 }), "Global app search and breadcrumb")
             root.launch(results.findIndex(function(e) { return e.appId === app.appId }))
-            check(!root.opened && lastDispatch[3] === "uwsm-app" && lastDispatch[6] === app.appId + ".desktop", "App launch dispatch")
+            check(!root.opened && lastDispatch[0] === "/usr/bin/python3" && lastDispatch[3] === "app" && lastDispatch[4] === app.appId, "App launch dispatch")
             root.open("{}")
             searchField.text = "screenshot"
             var screenshot = results.findIndex(function(e) { return e.id === "trigger.capture.screenshot" })
             check(screenshot >= 0 && results[screenshot].comment.indexOf("Trigger › Capture") >= 0, "Nested action search")
             root.launch(screenshot)
-            check(!root.opened && lastDispatch[3] === "bash" && lastDispatch[5] === "omarchy-capture-screenshot", "Action dispatch mocked")
+            check(!root.opened && lastDispatch[3] === "action" && lastDispatch[4] === results[screenshot].id, "Action dispatch mocked")
             root.open("{}")
             root.launch(find("Learn"))
             searchField.text = "screenshot"
@@ -64,8 +64,8 @@
             }
             check(MenuDescriptions.describe({id: "style.theme", description: "My own description"}) === "My own description", "User description takes priority")
             check(MenuDescriptions.describe({id: "apps.example", kind: "app", description: "Original app description"}) === "Original app description", "App description preserved")
-            searchField.text = "special characters"
-            check(results.some(function(e) { return e.id === "setup.config.xcompose" }), "Search description words")
+            searchField.text = "community help"
+            check(results.some(function(e) { return e.id === "learn" }), "Search description words")
             root.open("{}")
             check(results.find(function(e) { return e.id === "style" }).comment === MenuDescriptions.describe(catalog.item("style")), "Category subtitle shown")
             console.log("PASS descriptions for", covered, "menu/provider entries, source precedence and description search")

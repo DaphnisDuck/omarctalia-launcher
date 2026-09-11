@@ -6,3 +6,5 @@ Original MenuModel.js SHA-256: `ff6b265ca477d0d04297b0d9a5d9715960069db6da446031
 
 Source: https://github.com/basecamp/omarchy/tree/master/shell/plugins/menu
 License: MIT; see LICENSE-OMARCHY.
+
+Version 1.1.0 removes upstream shell-expression evaluation. The command-policy files are a fixed compatibility snapshot of the same installed menu, translated into argument lists and typed guards; incoming shared menu text is only compared for compatibility.

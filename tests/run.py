@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-RUNTIME = ['Launcher.qml','MenuCatalog.qml','IconResolver.qml','MenuModel.js','MenuDescriptions.js','run-action.sh','manifest.json']
+RUNTIME = ['Launcher.qml','MenuCatalog.qml','IconResolver.qml','MenuModel.js','MenuDescriptions.js','command-broker.py','CommandPolicy.json','CommandPolicy.js','manifest.json']
 
 def qml_result(output):
     found = re.findall(r'OMARCTALIA_TEST_RESULT=(\{[^\n]+\})', output)
@@ -34,6 +34,7 @@ def execute_qml(path, env, expected_failure=False):
 
 
 def main():
+    subprocess.run(['/usr/bin/python3',str(ROOT/'tests/security_test.py')],check=True)
     subprocess.run(['node',str(ROOT/'tests/model.test.cjs')],check=True)
     subprocess.run(['python3',str(ROOT/'tests/installer_test.py')],check=True)
     with tempfile.TemporaryDirectory(prefix='omarctalia-test-') as folder:
@@ -76,20 +77,6 @@ function cleanupTestCase() { console.log("OMARCTALIA_TEST_RESULT=" + JSON.string
         catalog=catalog.replace('    providerProc.running = true','    // Provider rows are supplied by tests.')
         (temp/'MenuCatalog.qml').write_text(catalog)
         execute_qml(temp/'UiChecks.qml',env)
-        # Mock notifications and logging while running actual supervisor code.
-        mock=temp/'bin'; mock.mkdir(); notice=temp/'notices'
-        for name in ['notify-send','logger']:
-            file=mock/name
-            file.write_text('#!/bin/bash\nprintf "%s\\n" "$@" >> "$NOTICE_FILE"\n')
-            file.chmod(0o755)
-        action_env=dict(env,PATH=str(mock)+':'+os.environ['PATH'],NOTICE_FILE=str(notice))
-        for code in [0,7,130,143]:
-            notice.unlink(missing_ok=True)
-            result=subprocess.run(['bash',str(ROOT/'run-action.sh'),'Test $label; literal','bash','-c',f'exit {code}'],env=action_env,timeout=5)
-            assert result.returncode==code
-            assert notice.exists()==(code==7)
-            if code==7: assert 'Test $label; literal' in notice.read_text()
-        print('PASS: action success, failure notification, and cancellation')
     print('ALL TESTS PASSED')
 
 if __name__=='__main__': main()

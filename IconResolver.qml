@@ -85,9 +85,8 @@ Item {
         scannedLines = 0
         scanCount++
         // Paths are separate arguments, never interpolated into the shell script.
-        scan.command = ["timeout", "--kill-after=2s", root.scanTimeoutSeconds + "s", "bash", "-c",
-            'status=0; for dir in "$@"; do [ -d "$dir" ] || continue; find -L "$dir" -type f \\( -iname "*.svg" -o -iname "*.png" -o -iname "*.xpm" \\) -print 2>/dev/null || status=1; done; exit "$status"',
-            "omarctalia-icons"].concat(directories)
+        var broker = decodeURIComponent(Qt.resolvedUrl("command-broker.py").toString().replace(/^file:\/\//, ""))
+        scan.command = ["/usr/bin/timeout", "--kill-after=2s", root.scanTimeoutSeconds + "s", "/usr/bin/python3", "-I", broker, "icons"].concat(directories)
         scan.running = true
     }
 

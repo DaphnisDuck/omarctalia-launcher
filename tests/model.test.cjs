@@ -44,14 +44,6 @@ test('installed menu is compatible and all entries have descriptions',()=>{
   assert.ok(description && description!==`Run ${e.label}` && description!==`Browse ${e.label} options`,id);
  }
 });
-test('guard IDs are quoted and cannot become shell code',()=>{
- const id="a'; printf BAD; #";
- const script=m.guardScript({[id]:{when:'true'}});
- const result=spawnSync('bash',['-c',script],{encoding:'utf8'});
- assert.equal(result.status,0); assert.equal(result.stdout,`${id}:w:1\n`);
- assert.equal(m.isVisible({},{},{},{id:'x',kind:'action',when:'true'}),false);
- assert.equal(m.isVisible({},{},{x:true},{id:'x',kind:'action',when:'true'}),true);
-});
 test('dynamic rows replace stale entries without duplicating IDs',()=>{
  const original=m.mergeMenuSources(base,[]);
  const once=m.mergeAppRows(original.items,original.itemOrder,[{id:'apps.x',kind:'app'},{id:'apps.x',kind:'app'}]);

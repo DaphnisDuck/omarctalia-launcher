@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.0.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.1.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -44,17 +44,15 @@ Typing then searches immediately, and Escape closes directly. The installer pres
 
 Colors bind to Omarchy's shared `qs.Commons.Color.menu` object. Themes and user `shell.toml` overrides update the card, text, selection, borders, overlay, search field, Back button and scrollbar. App icons retain their own artwork.
 
-## Reliability behavior
+## Command security and compatibility
 
-- Menu JSONC supports inline/block comments and trailing commas without changing quoted URLs or command strings.
-- Partial overrides are merged **before** defaults are applied. Changing a description no longer removes an item's action, provider, or conditions.
-- Malformed configuration or invalid parent/target relationships retain the last working menu and show a short status message. If defaults are unavailable at startup, Apps remains available. A missing optional user extension means no overrides.
-- The menu-model helper is bundled, with upstream attribution, instead of imported from Omarchy's mutable internal file. Omarchy's menu definitions and theme interface remain external dependencies.
-- Provider and availability lookups are bounded to 12 seconds, with a 2-second termination grace period. Failed provider results do not replace working choices; visiting the category again retries. Output is capped. Results from an obsolete configuration are discarded.
-- Conditional actions remain hidden until an initial availability check succeeds. A failed subsequent check retains the previous result; an action can still fail if external state has changed.
-- Installed icon files provide a fallback when Qt theme lookup fails. The shared icon index is cached for five minutes, invalidated after application-catalog changes, and scanned with a 10-second limit. Failures preserve the previous cache and back off for 30 seconds.
-- Commands run through a detached supervisor. Unsuccessful exits produce a desktop notification and a journal entry tagged `omarctalia-launcher`. Interrupt/termination exits are treated as cancellation. Actions are not timed out: installers and applications may legitimately run for a long time.
-- An application's successful launch request does **not** prove its window appeared. The supervisor reports command exit failures; it cannot detect every later application crash. Arbitrary menu actions remain trusted shell commands, just as in Omarchy's menu.
+Shared menu files are treated as untrusted data. Their action, condition, and provider strings are compared with a bundled compatibility policy and never evaluated as shell programs. Supported actions use fixed argument lists through a Python broker. Guards use typed package, file, command-presence, and specific system-query operations. Unknown or changed executable fields are hidden; labels, descriptions, icons, and navigation can still be customized.
+
+This changes upstream compatibility: new or changed Omarchy commands require a reviewed policy update. See `SECURITY.md` for the current unsupported entries and execution boundary. The plugin continues to read menu presentation data and application entries live.
+
+External processes start through absolute `/usr/bin` paths. Child processes receive a system-only PATH with shell startup hooks removed. Icon scanning uses Python filesystem APIs. App launching is an explicit user action and uses the selected desktop-entry ID through gtk-launch; installed desktop entries remain executable application definitions.
+
+Malformed menus retain the previous working menu. Queries have time and output limits. Icon indexing is cached and preserves its previous results after failure. Unsuccessful selected commands produce a notification. These checks cannot guarantee that an application window appeared or detect every later crash.
 
 ## Standard Omarchy installation
 
@@ -64,7 +62,7 @@ Install with Omarchy's plugin manager:
 omarchy plugin add https://github.com/DaphnisDuck/omarctalia-launcher --enable
 ```
 
-The repository root contains the manifest and runtime files. No build step or custom installer is required for this route. Python and Node.js are development tools, not runtime requirements for standard installation.
+The repository root contains the manifest and runtime files. No build step or custom installer is required for this route. Python 3 is a runtime dependency; Node.js is needed only for tests.
 
 Open the launcher with the command in **Use** above. To bind Super+Space, add this to `~/.config/hypr/bindings.lua`:
 
@@ -93,7 +91,7 @@ Also remove any launcher keybinding you added (including its `hl.unbind` if rest
 
 ## Local install or upgrade
 
-Requires Python 3.9+, Quickshell, Bash, coreutils `timeout`, `find`, `uwsm-app`, `gtk-launch`, `notify-send`, `logger`, and the Omarchy theme interface. Testing also needs Node.js and QtTest.
+Requires Python 3.9+, Quickshell, coreutils `timeout`, `uwsm-app`, `gtk-launch`, `notify-send`, `pacman`, and the installed Omarchy commands and theme interface. Executables must be available under `/usr/bin`. Testing also needs Node.js and QtTest.
 
 From this source folder:
 
@@ -121,16 +119,7 @@ Restore validates the backup and refuses to overwrite files edited after the ins
 
 ## Tests and maintenance
 
-`python3 tests/run.py` checks:
-
-- Partial overrides, JSONC edge cases, invalid schemas/hierarchy, quoted guard IDs, dynamic rows, and description coverage against the installed menu.
-- Actual QML controls and key events in an offscreen window: categories, search, history, launching dispatch, vi enabled/disabled, and live color changes.
-- Configuration recovery, failed and timed-out providers, successful retries, and guard timeout recovery.
-- Chromium/Discord icon decoding, caching, invalidation, and preservation after a real filesystem-scan error.
-- Detached command success/failure/cancellation, plus installation, settings preservation and rollback conflict protection.
-- A deliberately failing QtTest assertion to ensure failures cannot silently pass the runner.
-
-No real applications or menu actions are launched by these tests. Availability fixtures may execute harmless shell checks. Temporary files and installations live under a temporary directory.
+`python3 tests/run.py` checks model parsing, menu recovery, rejection of untrusted executable fields, typed action dispatch, poisoned PATH/startup hooks, icons and caching, UI navigation/search, vi modes, theme changes, and installation/rollback. External action dispatch is mocked in UI tests; no real applications or menu actions are launched. Guard checks may perform read-only system queries.
 
 Live Wayland focus, multiple displays, suspend/resume, and login-session behavior still need normal desktop use. Keep the stock Omarchy menu reachable, and rerun the suite after major Omarchy/Quickshell upgrades. The dependency check catches missing interfaces; it is not a guarantee of compatibility with future releases.
 
@@ -141,7 +130,8 @@ Live Wayland focus, multiple displays, suspend/resume, and login-session behavio
 - `MenuModel.js`: bundled parser/model with local fixes.
 - `MenuDescriptions.js`: editable menu descriptions.
 - `IconResolver.qml`: icon lookup and cached fallback.
-- `run-action.sh`: detached exit-status reporting.
+- `command-broker.py`: typed guards, providers, icon enumeration and selected action dispatch.
+- `CommandPolicy.json` / `CommandPolicy.js`: reviewed command compatibility snapshot.
 - `install.py` and `tests/`: repeatable installation, rollback and validation.
 
 See `UPSTREAM.md` and `LICENSE-OMARCHY` for the Omarchy-derived code's provenance and license.

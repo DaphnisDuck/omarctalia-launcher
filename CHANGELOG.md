@@ -1,3 +1,11 @@
+# 1.1.0 — Marketplace security review
+
+- Stop evaluating shared menu strings as shell programs.
+- Add a fixed command policy and typed Python broker; pin executable paths and sanitize child environment.
+- Replace shell icon scanning with filesystem APIs.
+- Hide unsupported or modified executable menu entries (see SECURITY.md).
+- Add regression checks for menu injection and ambient PATH/startup hooks.
+
 # Changes
 
 ## 1.0.0

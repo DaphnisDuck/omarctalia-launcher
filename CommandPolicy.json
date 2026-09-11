@@ -1,0 +1,4784 @@
+{
+  "apps": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "apps",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "learn": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "update": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "about": {
+    "actionText": "omarchy-launch-about",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-about"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "system": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "system.screensaver": {
+    "actionText": "omarchy-launch-screensaver force",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-screensaver",
+      "force"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "system.lock": {
+    "actionText": "omarchy-system-lock",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-system-lock"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "system.suspend": {
+    "actionText": "systemctl suspend",
+    "whenText": "! omarchy-toggle-enabled suspend-off",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/systemctl",
+      "suspend"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "exit",
+        "argv": [
+          "/usr/bin/omarchy-toggle-enabled",
+          "suspend-off"
+        ]
+      }
+    },
+    "checked": null
+  },
+  "system.hibernate": {
+    "actionText": "systemctl hibernate",
+    "whenText": "omarchy-hibernation-available",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/systemctl",
+      "hibernate"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hibernation-available"
+      ]
+    },
+    "checked": null
+  },
+  "system.logout": {
+    "actionText": "omarchy-system-logout",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-system-logout"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "system.reboot": {
+    "actionText": "omarchy-system-reboot",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-system-reboot"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "system.shutdown": {
+    "actionText": "omarchy-system-shutdown",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-system-shutdown"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.keybindings": {
+    "actionText": "omarchy-menu-keybindings",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-keybindings"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.omarchy": {
+    "actionText": "omarchy-launch-webapp 'https://omarchy.org/manual/'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-webapp",
+      "https://omarchy.org/manual/"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.hyprland": {
+    "actionText": "omarchy-launch-webapp 'https://wiki.hypr.land/'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-webapp",
+      "https://wiki.hypr.land/"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.arch": {
+    "actionText": "omarchy-launch-webapp 'https://wiki.archlinux.org/title/Main_page'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-webapp",
+      "https://wiki.archlinux.org/title/Main_page"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.neovim": {
+    "actionText": "omarchy-launch-webapp 'https://www.lazyvim.org/keymaps'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-webapp",
+      "https://www.lazyvim.org/keymaps"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.bash": {
+    "actionText": "omarchy-launch-webapp 'https://devhints.io/bash'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-webapp",
+      "https://devhints.io/bash"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.tmux-keybindings": {
+    "actionText": "omarchy-menu-tmux-keybindings",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-tmux-keybindings"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.herdr-keybindings": {
+    "actionText": "omarchy-menu-herdr-keybindings",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-herdr-keybindings"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "learn.community": {
+    "actionText": "omarchy-launch-discord-community",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-discord-community"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.emoji": {
+    "actionText": "omarchy-menu-emoji",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-emoji"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.reminder": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.screenshot": {
+    "actionText": "omarchy-capture-screenshot",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-screenshot"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.screenrecord.stop": {
+    "actionText": "omarchy-capture-screenrecording --stop-recording",
+    "whenText": "pgrep -f '^gpu-screen-recorder'",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-screenrecording",
+      "--stop-recording"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/pgrep",
+        "-f",
+        "^gpu-screen-recorder"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.capture.screenrecord": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.text": {
+    "actionText": "omarchy-capture-text",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-text"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.qr": {
+    "actionText": "omarchy-capture-qr",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-qr"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.color": {
+    "actionText": "pkill hyprpicker || hyprpicker -a",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.screenrecord.no-audio": {
+    "actionText": "omarchy-capture-screenrecording",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-screenrecording"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.screenrecord.desktop-audio": {
+    "actionText": "omarchy-capture-screenrecording --with-desktop-audio",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-screenrecording",
+      "--with-desktop-audio"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.screenrecord.microphone": {
+    "actionText": "omarchy-capture-screenrecording --with-desktop-audio --with-microphone-audio",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-screenrecording",
+      "--with-desktop-audio",
+      "--with-microphone-audio"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.capture.screenrecord.webcam": {
+    "actionText": "omarchy-capture-screenrecording-with-webcam",
+    "whenText": "omarchy-hw-webcam",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-capture-screenrecording-with-webcam"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-webcam"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.transcode": {
+    "actionText": "omarchy-transcode",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-transcode"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.share": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.hardware": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.tests": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.hardware.laptop-display": {
+    "actionText": "omarchy-hyprland-monitor-internal toggle",
+    "whenText": "omarchy-hw-laptop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-hyprland-monitor-internal",
+      "toggle"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-laptop"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.hardware.mirror-display": {
+    "actionText": "omarchy-hyprland-monitor-internal-mirror toggle",
+    "whenText": "omarchy-hw-laptop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-hyprland-monitor-internal-mirror",
+      "toggle"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-laptop"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.hardware.hybrid-gpu": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-toggle-hybrid-gpu",
+    "whenText": "omarchy-hw-hybrid-gpu",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-toggle-hybrid-gpu"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-hybrid-gpu"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.hardware.touchpad": {
+    "actionText": "omarchy-toggle-touchpad",
+    "whenText": "omarchy-hw-touchpad",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-touchpad"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-touchpad"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.hardware.touchpad-haptics": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "trigger.hardware.touchpad-haptics.low": {
+    "actionText": "dell-xps-touchpad-haptics set low",
+    "whenText": "omarchy-hw-dell-xps-haptic-touchpad && omarchy-cmd-present dell-xps-touchpad-haptics",
+    "checkedText": "[[ \"$(dell-xps-touchpad-haptics get)\" == \"low\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/dell-xps-touchpad-haptics",
+      "set",
+      "low"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/dell-xps-touchpad-haptics",
+        "get"
+      ],
+      "value": "low"
+    }
+  },
+  "trigger.hardware.touchpad-haptics.mid": {
+    "actionText": "dell-xps-touchpad-haptics set mid",
+    "whenText": "omarchy-hw-dell-xps-haptic-touchpad && omarchy-cmd-present dell-xps-touchpad-haptics",
+    "checkedText": "[[ \"$(dell-xps-touchpad-haptics get)\" == \"mid\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/dell-xps-touchpad-haptics",
+      "set",
+      "mid"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/dell-xps-touchpad-haptics",
+        "get"
+      ],
+      "value": "mid"
+    }
+  },
+  "trigger.hardware.touchpad-haptics.high": {
+    "actionText": "dell-xps-touchpad-haptics set high",
+    "whenText": "omarchy-hw-dell-xps-haptic-touchpad && omarchy-cmd-present dell-xps-touchpad-haptics",
+    "checkedText": "[[ \"$(dell-xps-touchpad-haptics get)\" == \"high\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/dell-xps-touchpad-haptics",
+      "set",
+      "high"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/dell-xps-touchpad-haptics",
+        "get"
+      ],
+      "value": "high"
+    }
+  },
+  "trigger.hardware.touchscreen": {
+    "actionText": "omarchy-toggle-touchscreen",
+    "whenText": "omarchy-hw-touchscreen",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-touchscreen"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-touchscreen"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.reminder.set": {
+    "actionText": "omarchy-reminder -i",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-reminder",
+      "-i"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.reminder.show": {
+    "actionText": "omarchy-reminder show",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-reminder",
+      "show"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.reminder.clear": {
+    "actionText": "omarchy-reminder clear",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-reminder",
+      "clear"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.share.clipboard": {
+    "actionText": "omarchy-menu-share clipboard",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-share",
+      "clipboard"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.share.file": {
+    "actionText": "omarchy-menu-share file",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-share",
+      "file"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.share.folder": {
+    "actionText": "omarchy-menu-share folder",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-share",
+      "folder"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.share.receive": {
+    "actionText": "uwsm-app -- localsend",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/uwsm-app",
+      "--",
+      "/usr/bin/localsend"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.idle-lock": {
+    "actionText": "omarchy-toggle-idle",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-idle"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.notifications": {
+    "actionText": "omarchy-toggle-notification-silencing",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-notification-silencing"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.crash-capture": {
+    "actionText": "omarchy-toggle-crash-capture",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-crash-capture"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.screensaver": {
+    "actionText": "omarchy-toggle-screensaver",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-screensaver"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.nightlight": {
+    "actionText": "omarchy-toggle-nightlight",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-nightlight"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.top-bar": {
+    "actionText": "omarchy-toggle-bar",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-toggle-bar"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.battery-percentage": {
+    "actionText": "omarchy-shell omarchy.power togglePercentage",
+    "whenText": "omarchy-hw-laptop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-shell",
+      "omarchy.power",
+      "togglePercentage"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-laptop"
+      ]
+    },
+    "checked": null
+  },
+  "trigger.toggle.workspace-layout": {
+    "actionText": "omarchy-hyprland-workspace-layout-toggle",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-hyprland-workspace-layout-toggle"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.window-gaps": {
+    "actionText": "omarchy-hyprland-window-gaps-toggle",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-hyprland-window-gaps-toggle"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.toggle.one-window-ratio": {
+    "actionText": "omarchy-hyprland-window-single-square-aspect-toggle",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-hyprland-window-single-square-aspect-toggle"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.tests.network-speedtest": {
+    "actionText": "omarchy-shell shell summon omarchy.speedtest",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-shell",
+      "shell",
+      "summon",
+      "omarchy.speedtest"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "trigger.tests.disk-speedtest": {
+    "actionText": "omarchy-shell shell summon omarchy.disk-speedtest",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-shell",
+      "shell",
+      "summon",
+      "omarchy.disk-speedtest"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.theme": {
+    "actionText": "theme=$(omarchy-theme-switcher); [[ -n $theme ]] && omarchy-theme-set \"$theme\"",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.background": {
+    "actionText": "background=$(omarchy-theme-bg-switcher); [[ -n $background ]] && omarchy-theme-bg-set \"$background\"",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.unlock": {
+    "actionText": "unlock=$(omarchy-plymouth-switcher); if [[ $unlock == default ]]; then omarchy-launch-floating-terminal-with-presentation omarchy-plymouth-reset; elif [[ -n $unlock ]]; then omarchy-launch-floating-terminal-with-presentation \"omarchy-plymouth-set-by-theme $(printf %q \"$unlock\")\"; fi",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.font": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "fonts",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.bar": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.bar.position": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.bar.transparency": {
+    "actionText": "omarchy-bar transparent toggle",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-bar",
+      "transparent",
+      "toggle"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.hyprland": {
+    "actionText": "omarchy-launch-config-editor \"$HOME/.config/hypr/looknfeel.lua\"",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-config-editor",
+      "$HOME/.config/hypr/looknfeel.lua"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.screensaver": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.about": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "style.bar.position.top": {
+    "actionText": "omarchy-bar position top",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-bar",
+      "position",
+      "top"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.bar.position.bottom": {
+    "actionText": "omarchy-bar position bottom",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-bar",
+      "position",
+      "bottom"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.bar.position.left": {
+    "actionText": "omarchy-bar position left",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-bar",
+      "position",
+      "left"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.bar.position.right": {
+    "actionText": "omarchy-bar position right",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-bar",
+      "position",
+      "right"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.about.text": {
+    "actionText": "omarchy-branding-about text",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-branding-about",
+      "text"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.about.image": {
+    "actionText": "omarchy-branding-about image",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-branding-about",
+      "image"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.about.default": {
+    "actionText": "omarchy-branding-about reset",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-branding-about",
+      "reset"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.screensaver.text": {
+    "actionText": "omarchy-branding-screensaver text",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-branding-screensaver",
+      "text"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.screensaver.image": {
+    "actionText": "omarchy-branding-screensaver image",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-branding-screensaver",
+      "image"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "style.screensaver.default": {
+    "actionText": "omarchy-branding-screensaver reset",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-branding-screensaver",
+      "reset"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.monitors": {
+    "actionText": "omarchy-launch-config-editor \"$HOME/.config/hypr/monitors.lua\"",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-config-editor",
+      "$HOME/.config/hypr/monitors.lua"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.keybindings": {
+    "actionText": "omarchy-launch-config-editor \"$HOME/.config/hypr/bindings.lua\"",
+    "whenText": "[[ -f ~/.config/hypr/bindings.lua ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-config-editor",
+      "$HOME/.config/hypr/bindings.lua"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "~/.config/hypr/bindings.lua",
+      "negate": false
+    },
+    "checked": null
+  },
+  "setup.input": {
+    "actionText": "omarchy-launch-config-editor \"$HOME/.config/hypr/input.lua\"",
+    "whenText": "[[ -f ~/.config/hypr/input.lua ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-config-editor",
+      "$HOME/.config/hypr/input.lua"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "~/.config/hypr/input.lua",
+      "negate": false
+    },
+    "checked": null
+  },
+  "setup.network": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.network.dns": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.network.dns.dhcp": {
+    "actionText": "omarchy-dns DHCP",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-dns)\" == \"DHCP\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-dns",
+      "DHCP"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-dns"
+      ],
+      "value": "DHCP"
+    }
+  },
+  "setup.network.dns.cloudflare": {
+    "actionText": "omarchy-dns Cloudflare",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-dns)\" == \"Cloudflare\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-dns",
+      "Cloudflare"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-dns"
+      ],
+      "value": "Cloudflare"
+    }
+  },
+  "setup.network.dns.google": {
+    "actionText": "omarchy-dns Google",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-dns)\" == \"Google\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-dns",
+      "Google"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-dns"
+      ],
+      "value": "Google"
+    }
+  },
+  "setup.network.dns.custom": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-dns Custom'",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-dns)\" == \"Custom\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-dns Custom"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-dns"
+      ],
+      "value": "Custom"
+    }
+  },
+  "setup.network.qr": {
+    "actionText": "omarchy-shell shell summon omarchy.wifiqr",
+    "whenText": "[[ $(omarchy-network-status) == wifi* ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-shell",
+      "shell",
+      "summon",
+      "omarchy.wifiqr"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": null
+  },
+  "setup.default": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.default.agent": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.default.agent.claude": {
+    "actionText": "omarchy-default-agent claude",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"claude\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "claude"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "claude"
+    }
+  },
+  "setup.default.agent.codex": {
+    "actionText": "omarchy-default-agent codex",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"codex\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "codex"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "codex"
+    }
+  },
+  "setup.default.agent.copilot": {
+    "actionText": "omarchy-default-agent copilot",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"copilot\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "copilot"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "copilot"
+    }
+  },
+  "setup.default.agent.crush": {
+    "actionText": "omarchy-default-agent crush",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"crush\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "crush"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "crush"
+    }
+  },
+  "setup.default.agent.cursor-agent": {
+    "actionText": "omarchy-default-agent cursor-agent",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"cursor-agent\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "cursor-agent"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "cursor-agent"
+    }
+  },
+  "setup.default.agent.gemini": {
+    "actionText": "omarchy-default-agent gemini",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"gemini\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "gemini"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "gemini"
+    }
+  },
+  "setup.default.agent.grok": {
+    "actionText": "omarchy-default-agent grok",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"grok\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "grok"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "grok"
+    }
+  },
+  "setup.default.agent.hermes": {
+    "actionText": "omarchy-default-agent hermes",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"hermes\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "hermes"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "hermes"
+    }
+  },
+  "setup.default.agent.muse": {
+    "actionText": "omarchy-default-agent muse",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"muse\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "muse"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "muse"
+    }
+  },
+  "setup.default.agent.omp": {
+    "actionText": "omarchy-default-agent omp",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"omp\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "omp"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "omp"
+    }
+  },
+  "setup.default.agent.openclaw": {
+    "actionText": "omarchy-default-agent openclaw",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"openclaw\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "openclaw"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "openclaw"
+    }
+  },
+  "setup.default.agent.opencode": {
+    "actionText": "omarchy-default-agent opencode",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"opencode\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "opencode"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "opencode"
+    }
+  },
+  "setup.default.agent.pi": {
+    "actionText": "omarchy-default-agent pi",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-default-agent)\" == \"pi\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-agent",
+      "pi"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-agent"
+      ],
+      "value": "pi"
+    }
+  },
+  "setup.default.browser": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.default.browser.chromium": {
+    "actionText": "omarchy-default-browser chromium",
+    "whenText": "omarchy-cmd-present chromium",
+    "checkedText": "[[ \"$(omarchy-default-browser)\" == \"chromium\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-browser",
+      "chromium"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "chromium"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-browser"
+      ],
+      "value": "chromium"
+    }
+  },
+  "setup.default.browser.chrome": {
+    "actionText": "omarchy-default-browser chrome",
+    "whenText": "omarchy-cmd-present google-chrome-stable",
+    "checkedText": "[[ \"$(omarchy-default-browser)\" == \"chrome\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-browser",
+      "chrome"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "google-chrome-stable"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-browser"
+      ],
+      "value": "chrome"
+    }
+  },
+  "setup.default.browser.brave": {
+    "actionText": "omarchy-default-browser brave",
+    "whenText": "omarchy-cmd-present brave",
+    "checkedText": "[[ \"$(omarchy-default-browser)\" == \"brave\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-browser",
+      "brave"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "brave"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-browser"
+      ],
+      "value": "brave"
+    }
+  },
+  "setup.default.browser.brave-origin": {
+    "actionText": "omarchy-default-browser brave-origin",
+    "whenText": "omarchy-cmd-present brave-origin",
+    "checkedText": "[[ \"$(omarchy-default-browser)\" == \"brave-origin\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-browser",
+      "brave-origin"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "brave-origin"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-browser"
+      ],
+      "value": "brave-origin"
+    }
+  },
+  "setup.default.browser.edge": {
+    "actionText": "omarchy-default-browser edge",
+    "whenText": "omarchy-cmd-present microsoft-edge-stable",
+    "checkedText": "[[ \"$(omarchy-default-browser)\" == \"edge\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-browser",
+      "edge"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "microsoft-edge-stable"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-browser"
+      ],
+      "value": "edge"
+    }
+  },
+  "setup.default.browser.firefox": {
+    "actionText": "omarchy-default-browser firefox",
+    "whenText": "omarchy-cmd-present firefox",
+    "checkedText": "[[ \"$(omarchy-default-browser)\" == \"firefox\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-browser",
+      "firefox"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "firefox"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-browser"
+      ],
+      "value": "firefox"
+    }
+  },
+  "setup.default.browser.zen": {
+    "actionText": "omarchy-default-browser zen",
+    "whenText": "omarchy-cmd-present zen-browser",
+    "checkedText": "[[ \"$(omarchy-default-browser)\" == \"zen\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-browser",
+      "zen"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "zen-browser"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-browser"
+      ],
+      "value": "zen"
+    }
+  },
+  "setup.default.terminal": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.default.terminal.alacritty": {
+    "actionText": "omarchy-default-terminal alacritty",
+    "whenText": "omarchy-cmd-present alacritty",
+    "checkedText": "[[ \"$(omarchy-default-terminal)\" == \"alacritty\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-terminal",
+      "alacritty"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "alacritty"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-terminal"
+      ],
+      "value": "alacritty"
+    }
+  },
+  "setup.default.terminal.foot": {
+    "actionText": "omarchy-default-terminal foot",
+    "whenText": "omarchy-cmd-present foot",
+    "checkedText": "[[ \"$(omarchy-default-terminal)\" == \"foot\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-terminal",
+      "foot"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "foot"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-terminal"
+      ],
+      "value": "foot"
+    }
+  },
+  "setup.default.terminal.ghostty": {
+    "actionText": "omarchy-default-terminal ghostty",
+    "whenText": "omarchy-cmd-present ghostty",
+    "checkedText": "[[ \"$(omarchy-default-terminal)\" == \"ghostty\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-terminal",
+      "ghostty"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "ghostty"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-terminal"
+      ],
+      "value": "ghostty"
+    }
+  },
+  "setup.default.terminal.kitty": {
+    "actionText": "omarchy-default-terminal kitty",
+    "whenText": "omarchy-cmd-present kitty",
+    "checkedText": "[[ \"$(omarchy-default-terminal)\" == \"kitty\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-terminal",
+      "kitty"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "kitty"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-terminal"
+      ],
+      "value": "kitty"
+    }
+  },
+  "setup.default.editor": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.default.editor.neovim": {
+    "actionText": "omarchy-default-editor nvim",
+    "whenText": "omarchy-cmd-present nvim",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"nvim\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "nvim"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "nvim"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "nvim"
+    }
+  },
+  "setup.default.editor.vscode": {
+    "actionText": "omarchy-default-editor code",
+    "whenText": "omarchy-cmd-present code",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"code\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "code"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "code"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "code"
+    }
+  },
+  "setup.default.editor.cursor": {
+    "actionText": "omarchy-default-editor cursor",
+    "whenText": "omarchy-cmd-present cursor",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"cursor\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "cursor"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "cursor"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "cursor"
+    }
+  },
+  "setup.default.editor.zed": {
+    "actionText": "omarchy-default-editor zed",
+    "whenText": "omarchy-cmd-present zeditor",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"zeditor\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "zed"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "zeditor"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "zeditor"
+    }
+  },
+  "setup.default.editor.sublime": {
+    "actionText": "omarchy-default-editor sublime_text",
+    "whenText": "omarchy-cmd-present sublime_text",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"sublime_text\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "sublime_text"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "sublime_text"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "sublime_text"
+    }
+  },
+  "setup.default.editor.helix": {
+    "actionText": "omarchy-default-editor helix",
+    "whenText": "omarchy-cmd-present helix",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"helix\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "helix"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "helix"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "helix"
+    }
+  },
+  "setup.default.editor.vim": {
+    "actionText": "omarchy-default-editor vim",
+    "whenText": "omarchy-cmd-present vim",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"vim\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "vim"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "vim"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "vim"
+    }
+  },
+  "setup.default.editor.emacs": {
+    "actionText": "omarchy-default-editor emacs",
+    "whenText": "omarchy-cmd-present emacs",
+    "checkedText": "[[ \"$(omarchy-default-editor)\" == \"emacs\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-default-editor",
+      "emacs"
+    ],
+    "when": {
+      "type": "cmd",
+      "value": "emacs"
+    },
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-default-editor"
+      ],
+      "value": "emacs"
+    }
+  },
+  "setup.plugin": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.plugin.enable": {
+    "actionText": "omarchy-menu-plugin enable",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-plugin",
+      "enable"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.plugin.disable": {
+    "actionText": "omarchy-menu-plugin disable",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-plugin",
+      "disable"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.plugin.add": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-plugin-add'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-plugin-add"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.plugin.clone": {
+    "actionText": "omarchy-menu-plugin clone",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-plugin",
+      "clone"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.plugin.remove": {
+    "actionText": "omarchy-menu-plugin remove",
+    "whenText": "compgen -G \"$HOME/.config/omarchy/plugins/*/manifest.json\"",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-plugin",
+      "remove"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": null
+  },
+  "setup.security": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.config": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.security.fingerprint": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-fingerprint",
+    "whenText": "omarchy-hw-fingerprint",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-setup-security-fingerprint"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-hw-fingerprint"
+      ]
+    },
+    "checked": null
+  },
+  "setup.security.fido2": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-fido2",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-setup-security-fido2"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.security.sshd": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-sshd",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-setup-security-sshd"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.security.passwordless-sudo": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-sudo-passwordless",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-sudo-passwordless"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.security.sudoless-docker": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-security-sudoless-docker",
+    "whenText": "omarchy-sudo-docker --configured",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-setup-security-sudoless-docker"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-sudo-docker",
+        "--configured"
+      ]
+    },
+    "checked": null
+  },
+  "setup.config.hyprland": {
+    "actionText": "omarchy-launch-config-editor \"$HOME/.config/hypr/hyprland.lua\"",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-config-editor",
+      "$HOME/.config/hypr/hyprland.lua"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.config.hyprsunset": {
+    "actionText": "omarchy-launch-config-editor ~/.config/hypr/hyprsunset.conf && omarchy-restart-hyprsunset",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.config.xcompose": {
+    "actionText": "omarchy-launch-config-editor ~/.XCompose && omarchy-restart-xcompose",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "setup.direct-boot": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-setup-direct-boot",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-setup-direct-boot"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "setup.reset": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-system-factory-reset",
+    "whenText": "[[ $(findmnt -no FSTYPE /) == btrfs ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-system-factory-reset"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": null
+  },
+  "install.package": {
+    "actionText": "xdg-terminal-exec --app-id=org.omarchy.terminal omarchy-pkg-install",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/xdg-terminal-exec",
+      "--app-id=org.omarchy.terminal",
+      "/usr/bin/omarchy-pkg-install"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.aur": {
+    "actionText": "xdg-terminal-exec --app-id=org.omarchy.terminal omarchy-pkg-aur-install",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/xdg-terminal-exec",
+      "--app-id=org.omarchy.terminal",
+      "/usr/bin/omarchy-pkg-aur-install"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.webapp": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-webapp-install",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-webapp-install"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.tui": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-tui-install",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-tui-install"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.style.theme": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-theme-install",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-theme-install"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style.background": {
+    "actionText": "omarchy-theme-bg-install",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-theme-bg-install"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style.font": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.style.font.cascadia": {
+    "actionText": "omarchy-install-font 'Cascadia Mono' ttf-cascadia-mono-nerd 'CaskaydiaMono Nerd Font'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-font",
+      "Cascadia Mono",
+      "ttf-cascadia-mono-nerd",
+      "CaskaydiaMono Nerd Font"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style.font.meslo": {
+    "actionText": "omarchy-install-font 'Meslo LG Mono' ttf-meslo-nerd 'MesloLGL Nerd Font'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-font",
+      "Meslo LG Mono",
+      "ttf-meslo-nerd",
+      "MesloLGL Nerd Font"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style.font.fira": {
+    "actionText": "omarchy-install-font 'Fira Code' ttf-firacode-nerd 'FiraCode Nerd Font'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-font",
+      "Fira Code",
+      "ttf-firacode-nerd",
+      "FiraCode Nerd Font"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style.font.victor": {
+    "actionText": "omarchy-install-font 'Victor Code' ttf-victor-mono-nerd 'VictorMono Nerd Font'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-font",
+      "Victor Code",
+      "ttf-victor-mono-nerd",
+      "VictorMono Nerd Font"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style.font.bitstream": {
+    "actionText": "omarchy-install-font 'Bitstream Vera Code' ttf-bitstream-vera-mono-nerd 'BitstromWera Nerd Font'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-font",
+      "Bitstream Vera Code",
+      "ttf-bitstream-vera-mono-nerd",
+      "BitstromWera Nerd Font"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.style.font.iosevka": {
+    "actionText": "omarchy-install-font Iosevka ttf-iosevka-nerd 'Iosevka Nerd Font Mono'",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-font",
+      "Iosevka",
+      "ttf-iosevka-nerd",
+      "Iosevka Nerd Font Mono"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.service": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.development": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.editor": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.terminal": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.browser": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.ai": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.gaming": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.windows": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-windows-vm install'",
+    "whenText": "[[ ! -f $HOME/.local/share/applications/windows-vm.desktop ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-windows-vm install"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "$HOME/.local/share/applications/windows-vm.desktop",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.preinstalls": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-preinstalls",
+    "whenText": "[[ -f $HOME/.local/state/omarchy/preinstalls-removed ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-preinstalls"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "$HOME/.local/state/omarchy/preinstalls-removed",
+      "negate": false
+    },
+    "checked": null
+  },
+  "install.browser.chrome": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser chrome'",
+    "whenText": "! omarchy-pkg-present google-chrome",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-browser chrome"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "google-chrome"
+      }
+    },
+    "checked": null
+  },
+  "install.browser.edge": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser edge'",
+    "whenText": "! omarchy-pkg-present microsoft-edge-stable-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-browser edge"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "microsoft-edge-stable-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.browser.brave": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser brave'",
+    "whenText": "! omarchy-pkg-present brave-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-browser brave"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "brave-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.browser.brave-origin": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser brave-origin'",
+    "whenText": "! omarchy-pkg-present brave-origin-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-browser brave-origin"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "brave-origin-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.browser.firefox": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser firefox'",
+    "whenText": "! omarchy-pkg-present firefox",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-browser firefox"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "firefox"
+      }
+    },
+    "checked": null
+  },
+  "install.browser.zen": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-browser zen'",
+    "whenText": "! omarchy-pkg-present zen-browser-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-browser zen"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "zen-browser-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.service.1password": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-1password",
+    "whenText": "! omarchy-pkg-present 1password",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-service-1password"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "1password"
+      }
+    },
+    "checked": null
+  },
+  "install.service.dropbox": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-dropbox",
+    "whenText": "! omarchy-pkg-present dropbox",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-service-dropbox"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "dropbox"
+      }
+    },
+    "checked": null
+  },
+  "install.service.spotify": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-spotify",
+    "whenText": "! omarchy-pkg-present spotify",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-service-spotify"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "spotify"
+      }
+    },
+    "checked": null
+  },
+  "install.service.signal": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-signal",
+    "whenText": "! omarchy-pkg-present signal-desktop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-service-signal"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "signal-desktop"
+      }
+    },
+    "checked": null
+  },
+  "install.service.tailscale": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-tailscale",
+    "whenText": "! omarchy-pkg-present tailscale",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-service-tailscale"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "tailscale"
+      }
+    },
+    "checked": null
+  },
+  "install.service.nordvpn": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-nordvpn",
+    "whenText": "! omarchy-pkg-present nordvpn-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-service-nordvpn"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "nordvpn-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.service.once": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-service-once",
+    "whenText": "! omarchy-pkg-present once-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-service-once"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "once-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.service.bitwarden": {
+    "actionText": "omarchy-install-and-launch Bitwarden 'bitwarden bitwarden-cli' bitwarden",
+    "whenText": "! omarchy-pkg-present bitwarden",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-and-launch",
+      "Bitwarden",
+      "bitwarden bitwarden-cli",
+      "bitwarden"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "bitwarden"
+      }
+    },
+    "checked": null
+  },
+  "install.service.chromium-account": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-chromium-google-account",
+    "whenText": "[[ -f ~/.config/chromium-flags.conf ]] && ! grep -q oauth2-client-id ~/.config/chromium-flags.conf",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-chromium-google-account"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": null
+  },
+  "install.editor.vscode": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-editor-vscode",
+    "whenText": "! omarchy-pkg-present visual-studio-code-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-editor-vscode"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "visual-studio-code-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.editor.cursor": {
+    "actionText": "omarchy-install-and-launch Cursor cursor-bin cursor",
+    "whenText": "! omarchy-pkg-present cursor-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-and-launch",
+      "Cursor",
+      "cursor-bin",
+      "cursor"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "cursor-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.editor.zed": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-editor-zed",
+    "whenText": "! omarchy-pkg-present zed",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-editor-zed"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "zed"
+      }
+    },
+    "checked": null
+  },
+  "install.editor.sublime": {
+    "actionText": "omarchy-install-and-launch 'Sublime Text' sublime-text-4 sublime_text",
+    "whenText": "! omarchy-pkg-present sublime-text-4",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-and-launch",
+      "Sublime Text",
+      "sublime-text-4",
+      "sublime_text"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "sublime-text-4"
+      }
+    },
+    "checked": null
+  },
+  "install.editor.helix": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-editor-helix",
+    "whenText": "! omarchy-pkg-present helix",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-editor-helix"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "helix"
+      }
+    },
+    "checked": null
+  },
+  "install.editor.vim": {
+    "actionText": "omarchy-install-app Vim vim",
+    "whenText": "! omarchy-pkg-present vim",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-app",
+      "Vim",
+      "vim"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "vim"
+      }
+    },
+    "checked": null
+  },
+  "install.editor.emacs": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-editor-emacs",
+    "whenText": "! omarchy-pkg-present omarchy-emacs",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-editor-emacs"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "omarchy-emacs"
+      }
+    },
+    "checked": null
+  },
+  "install.terminal.alacritty": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-terminal alacritty'",
+    "whenText": "! omarchy-pkg-present alacritty",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-terminal alacritty"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "alacritty"
+      }
+    },
+    "checked": null
+  },
+  "install.terminal.foot": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-terminal foot'",
+    "whenText": "! omarchy-pkg-present foot",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-terminal foot"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "foot"
+      }
+    },
+    "checked": null
+  },
+  "install.terminal.ghostty": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-terminal ghostty'",
+    "whenText": "! omarchy-pkg-present ghostty",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-terminal ghostty"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "ghostty"
+      }
+    },
+    "checked": null
+  },
+  "install.terminal.kitty": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-terminal kitty'",
+    "whenText": "! omarchy-pkg-present kitty",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-terminal kitty"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "kitty"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.chatgpt": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-ai-chatgpt",
+    "whenText": "! omarchy-pkg-present openai-codex-desktop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-ai-chatgpt"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "openai-codex-desktop"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.dictation": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-voxtype-install",
+    "whenText": "! omarchy-pkg-present voxtype-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-voxtype-install"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "voxtype-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.grok-bot": {
+    "actionText": "omarchy-install-and-launch 'Grok Bot' grok-bot grok-bot",
+    "whenText": "! omarchy-pkg-present grok-bot",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-and-launch",
+      "Grok Bot",
+      "grok-bot",
+      "grok-bot"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "grok-bot"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.lm-studio": {
+    "actionText": "omarchy-install-app 'LM Studio' lmstudio-bin",
+    "whenText": "! omarchy-pkg-present lmstudio-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-app",
+      "LM Studio",
+      "lmstudio-bin"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "lmstudio-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.ollama": {
+    "actionText": "if omarchy-cmd-present nvidia-smi; then ollama_pkg=ollama-cuda; elif omarchy-cmd-present rocminfo; then ollama_pkg=ollama-rocm; else ollama_pkg=ollama; fi; omarchy-install-app Ollama \"$ollama_pkg\"",
+    "whenText": "! omarchy-cmd-present ollama",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "cmd",
+        "value": "ollama"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.t3-code": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-ai-t3-code",
+    "whenText": "! omarchy-pkg-present t3code-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-ai-t3-code"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "t3code-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.hermes": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-ai-hermes",
+    "whenText": "! omarchy-pkg-present hermes-desktop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-ai-hermes"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "hermes-desktop"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.openclaw": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-ai-openclaw",
+    "whenText": "! omarchy-pkg-present openclaw",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-ai-openclaw"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "openclaw"
+      }
+    },
+    "checked": null
+  },
+  "install.ai.perplexity": {
+    "actionText": "omarchy-install-and-launch Perplexity perplexity perplexity",
+    "whenText": "! omarchy-pkg-present perplexity",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-and-launch",
+      "Perplexity",
+      "perplexity",
+      "perplexity"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "perplexity"
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.steam": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-steam",
+    "whenText": "! omarchy-pkg-present steam",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-steam"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "steam"
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.retroarch": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-retroarch",
+    "whenText": "! omarchy-pkg-present retroarch",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-retroarch"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "retroarch"
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.minecraft": {
+    "actionText": "omarchy-install-and-launch Minecraft minecraft-launcher minecraft-launcher",
+    "whenText": "! omarchy-pkg-present minecraft-launcher",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-install-and-launch",
+      "Minecraft",
+      "minecraft-launcher",
+      "minecraft-launcher"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "minecraft-launcher"
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.geforce-now": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-geforce-now",
+    "whenText": "! flatpak info com.nvidia.geforcenow",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-geforce-now"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "exit",
+        "argv": [
+          "/usr/bin/flatpak",
+          "info",
+          "com.nvidia.geforcenow"
+        ]
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.xbox-cloud": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-xbox-cloud",
+    "whenText": "[[ ! -f \"$HOME/.local/share/applications/Xbox Cloud Gaming.desktop\" ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-xbox-cloud"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "$HOME/.local/share/applications/Xbox Cloud Gaming.desktop",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.gaming.xbox-controllers": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-xbox-controllers",
+    "whenText": "! omarchy-pkg-present xpadneo-dkms",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-xbox-controllers"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "xpadneo-dkms"
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.battlenet": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-battlenet",
+    "whenText": "[[ ! -d $HOME/Games/battlenet ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-battlenet"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/Games/battlenet",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.gaming.lutris": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-lutris",
+    "whenText": "! omarchy-pkg-present lutris",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-lutris"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "lutris"
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.heroic": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-gaming-heroic",
+    "whenText": "! omarchy-pkg-present heroic-games-launcher-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-gaming-heroic"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "heroic-games-launcher-bin"
+      }
+    },
+    "checked": null
+  },
+  "install.gaming.retro-launcher": {
+    "actionText": "omarchy-games-retro-install",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-games-retro-install"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.development.rails": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env ruby'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/ruby ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env ruby"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/ruby",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.docker-dbs": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-install-docker-dbs",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-docker-dbs"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "install.development.javascript": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.development.go": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env go'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/go ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env go"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/go",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.php": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.development.python": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env python'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/python ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env python"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/python",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.elixir": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "install.development.zig": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env zig'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/zig ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env zig"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/zig",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.rust": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env rust'",
+    "whenText": "[[ ! -d $HOME/.rustup ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env rust"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.rustup",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.java": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env java'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/java ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env java"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/java",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.dotnet": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env dotnet'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/dotnet ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env dotnet"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/dotnet",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.ocaml": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env ocaml'",
+    "whenText": "[[ ! -d $HOME/.opam ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env ocaml"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.opam",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.clojure": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env clojure'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/clojure ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env clojure"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/clojure",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.scala": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env scala'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/scala ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env scala"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/scala",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.javascript.node": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env node'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/node ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env node"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/node",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.javascript.bun": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env bun'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/bun ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env bun"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/bun",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.javascript.deno": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env deno'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/deno ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env deno"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/deno",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.php.php": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env php'",
+    "whenText": "! omarchy-pkg-present php",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env php"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "php"
+      }
+    },
+    "checked": null
+  },
+  "install.development.php.laravel": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env laravel'",
+    "whenText": "[[ ! -x $HOME/.config/composer/vendor/bin/laravel ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env laravel"
+    ],
+    "when": {
+      "type": "path",
+      "test": "x",
+      "value": "$HOME/.config/composer/vendor/bin/laravel",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.php.symfony": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env symfony'",
+    "whenText": "! omarchy-pkg-present symfony-cli",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env symfony"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "pkg",
+        "value": "symfony-cli"
+      }
+    },
+    "checked": null
+  },
+  "install.development.elixir.elixir": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env elixir'",
+    "whenText": "[[ ! -d $HOME/.local/share/mise/installs/elixir ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env elixir"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/elixir",
+      "negate": true
+    },
+    "checked": null
+  },
+  "install.development.elixir.phoenix": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-install-dev-env phoenix'",
+    "whenText": "! compgen -G \"$HOME/.mix/archives/phx_new*\"",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-install-dev-env phoenix"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": null
+  },
+  "remove.package": {
+    "actionText": "xdg-terminal-exec --app-id=org.omarchy.terminal omarchy-pkg-remove",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/xdg-terminal-exec",
+      "--app-id=org.omarchy.terminal",
+      "/usr/bin/omarchy-pkg-remove"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "remove.webapp": {
+    "actionText": "omarchy-webapp-remove",
+    "whenText": "grep -qE '^Exec=.*(omarchy-launch-webapp|omarchy-webapp-handler)' $HOME/.local/share/applications/*.desktop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-webapp-remove"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": null
+  },
+  "remove.tui": {
+    "actionText": "omarchy-tui-remove",
+    "whenText": "grep -qE '^Exec=.*(\\$TERMINAL|xdg-terminal-exec).*-e' $HOME/.local/share/applications/*.desktop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-tui-remove"
+    ],
+    "when": {
+      "type": "unsupported"
+    },
+    "checked": null
+  },
+  "remove.development": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.theme": {
+    "actionText": "omarchy-theme-remove",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-theme-remove"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "remove.browser": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.dictation": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-voxtype-remove",
+    "whenText": "omarchy-pkg-present voxtype-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-voxtype-remove"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "voxtype-bin"
+    },
+    "checked": null
+  },
+  "remove.gaming": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.service": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.windows": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-windows-vm remove'",
+    "whenText": "[[ -f $HOME/.local/share/applications/windows-vm.desktop ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-windows-vm remove"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "$HOME/.local/share/applications/windows-vm.desktop",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.preinstalls": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-preinstalls",
+    "whenText": "[[ ! -f $HOME/.local/state/omarchy/preinstalls-removed ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-preinstalls"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "$HOME/.local/state/omarchy/preinstalls-removed",
+      "negate": true
+    },
+    "checked": null
+  },
+  "remove.security": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.security.fingerprint": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-fingerprint",
+    "whenText": "omarchy-pkg-present fprintd",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-security-fingerprint"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "fprintd"
+    },
+    "checked": null
+  },
+  "remove.security.fido2": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-fido2",
+    "whenText": "omarchy-pkg-present pam-u2f",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-security-fido2"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "pam-u2f"
+    },
+    "checked": null
+  },
+  "remove.security.sshd": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-sshd",
+    "whenText": "systemctl is-enabled --quiet sshd",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-security-sshd"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/systemctl",
+        "is-enabled",
+        "--quiet",
+        "sshd"
+      ]
+    },
+    "checked": null
+  },
+  "remove.security.sudoless-docker": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-security-sudoless-docker",
+    "whenText": "! omarchy-sudo-docker --configured",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-security-sudoless-docker"
+    ],
+    "when": {
+      "type": "not",
+      "child": {
+        "type": "exit",
+        "argv": [
+          "/usr/bin/omarchy-sudo-docker",
+          "--configured"
+        ]
+      }
+    },
+    "checked": null
+  },
+  "remove.ai.hermes": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-hermes",
+    "whenText": "omarchy-pkg-present hermes-desktop",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-ai-hermes"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "hermes-desktop"
+    },
+    "checked": null
+  },
+  "remove.browser.chrome": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser chrome'",
+    "whenText": "omarchy-pkg-present google-chrome",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-browser chrome"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "google-chrome"
+    },
+    "checked": null
+  },
+  "remove.browser.edge": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser edge'",
+    "whenText": "omarchy-pkg-present microsoft-edge-stable-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-browser edge"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "microsoft-edge-stable-bin"
+    },
+    "checked": null
+  },
+  "remove.browser.brave": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser brave'",
+    "whenText": "omarchy-pkg-present brave-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-browser brave"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "brave-bin"
+    },
+    "checked": null
+  },
+  "remove.browser.brave-origin": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser brave-origin'",
+    "whenText": "omarchy-pkg-present brave-origin-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-browser brave-origin"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "brave-origin-bin"
+    },
+    "checked": null
+  },
+  "remove.browser.firefox": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser firefox'",
+    "whenText": "omarchy-pkg-present firefox",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-browser firefox"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "firefox"
+    },
+    "checked": null
+  },
+  "remove.browser.zen": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-browser zen'",
+    "whenText": "omarchy-pkg-present zen-browser-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-browser zen"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "zen-browser-bin"
+    },
+    "checked": null
+  },
+  "remove.service.dropbox": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-service-dropbox",
+    "whenText": "omarchy-pkg-present dropbox",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-service-dropbox"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "dropbox"
+    },
+    "checked": null
+  },
+  "remove.service.tailscale": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-service-tailscale",
+    "whenText": "omarchy-pkg-present tailscale",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-service-tailscale"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "tailscale"
+    },
+    "checked": null
+  },
+  "remove.gaming.steam": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-steam",
+    "whenText": "omarchy-pkg-present steam",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-steam"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "steam"
+    },
+    "checked": null
+  },
+  "remove.gaming.retroarch": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-retroarch",
+    "whenText": "omarchy-pkg-present retroarch",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-retroarch"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "retroarch"
+    },
+    "checked": null
+  },
+  "remove.gaming.minecraft": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-minecraft",
+    "whenText": "omarchy-pkg-present minecraft-launcher",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-minecraft"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "minecraft-launcher"
+    },
+    "checked": null
+  },
+  "remove.gaming.geforce-now": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-geforce-now",
+    "whenText": "flatpak info com.nvidia.geforcenow",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-geforce-now"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/flatpak",
+        "info",
+        "com.nvidia.geforcenow"
+      ]
+    },
+    "checked": null
+  },
+  "remove.gaming.xbox-cloud": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-xbox-cloud",
+    "whenText": "[[ -f \"$HOME/.local/share/applications/Xbox Cloud Gaming.desktop\" ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-xbox-cloud"
+    ],
+    "when": {
+      "type": "path",
+      "test": "f",
+      "value": "$HOME/.local/share/applications/Xbox Cloud Gaming.desktop",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.gaming.xbox-controllers": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-xbox-controllers",
+    "whenText": "omarchy-pkg-present xpadneo-dkms",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-xbox-controllers"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "xpadneo-dkms"
+    },
+    "checked": null
+  },
+  "remove.gaming.battlenet": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-battlenet",
+    "whenText": "[[ -d $HOME/Games/battlenet ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-battlenet"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/Games/battlenet",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.gaming.lutris": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-lutris",
+    "whenText": "omarchy-pkg-present lutris",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-lutris"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "lutris"
+    },
+    "checked": null
+  },
+  "remove.gaming.heroic": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-gaming-heroic",
+    "whenText": "omarchy-pkg-present heroic-games-launcher-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-gaming-heroic"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "heroic-games-launcher-bin"
+    },
+    "checked": null
+  },
+  "remove.development.rails": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env ruby'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/ruby ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env ruby"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/ruby",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.javascript": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.development.go": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env go'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/go ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env go"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/go",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.php": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.development.python": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env python'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/python ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env python"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/python",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.elixir": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.development.zig": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env zig'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/zig ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env zig"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/zig",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.rust": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env rust'",
+    "whenText": "[[ -d $HOME/.rustup ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env rust"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.rustup",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.java": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env java'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/java ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env java"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/java",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.dotnet": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env dotnet'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/dotnet ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env dotnet"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/dotnet",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.ocaml": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env ocaml'",
+    "whenText": "[[ -d $HOME/.opam ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env ocaml"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.opam",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.clojure": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env clojure'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/clojure ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env clojure"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/clojure",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.scala": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env scala'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/scala ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env scala"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/scala",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.javascript.node": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env node'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/node ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env node"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/node",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.javascript.bun": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env bun'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/bun ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env bun"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/bun",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.javascript.deno": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env deno'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/deno ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env deno"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/deno",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.php.php": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env php'",
+    "whenText": "omarchy-pkg-present php",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env php"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "php"
+    },
+    "checked": null
+  },
+  "remove.development.php.laravel": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env laravel'",
+    "whenText": "[[ -x $HOME/.config/composer/vendor/bin/laravel ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env laravel"
+    ],
+    "when": {
+      "type": "path",
+      "test": "x",
+      "value": "$HOME/.config/composer/vendor/bin/laravel",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.php.symfony": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env symfony'",
+    "whenText": "omarchy-pkg-present symfony-cli",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env symfony"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "symfony-cli"
+    },
+    "checked": null
+  },
+  "remove.development.elixir.elixir": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env elixir'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/elixir ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env elixir"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/elixir",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.development.elixir.phoenix": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-remove-dev-env phoenix'",
+    "whenText": "[[ -d $HOME/.local/share/mise/installs/elixir ]]",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-dev-env phoenix"
+    ],
+    "when": {
+      "type": "path",
+      "test": "d",
+      "value": "$HOME/.local/share/mise/installs/elixir",
+      "negate": false
+    },
+    "checked": null
+  },
+  "remove.ai": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "remove.ai.t3-code": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-t3-code",
+    "whenText": "omarchy-pkg-present t3code-bin",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-ai-t3-code"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "t3code-bin"
+    },
+    "checked": null
+  },
+  "remove.ai.openclaw": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-openclaw",
+    "whenText": "omarchy-pkg-present openclaw",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-ai-openclaw"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "openclaw"
+    },
+    "checked": null
+  },
+  "remove.ai.perplexity": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-remove-ai-perplexity",
+    "whenText": "omarchy-pkg-present perplexity",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-remove-ai-perplexity"
+    ],
+    "when": {
+      "type": "pkg",
+      "value": "perplexity"
+    },
+    "checked": null
+  },
+  "update.omarchy": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-update"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.channel": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "update.config": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "update.themes": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-theme-update",
+    "whenText": "omarchy-theme-extras",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-theme-update"
+    ],
+    "when": {
+      "type": "exit",
+      "argv": [
+        "/usr/bin/omarchy-theme-extras"
+      ]
+    },
+    "checked": null
+  },
+  "update.process": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "update.hardware": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "update.firmware": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-update-firmware",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-update-firmware"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.password": {
+    "actionText": "",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": null,
+    "when": null,
+    "checked": null
+  },
+  "update.timezone": {
+    "actionText": "omarchy-menu-timezone",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-menu-timezone"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.time": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-update-time",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-update-time"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.channel.stable": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-channel-set stable'",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-channel-current)\" == \"stable\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-channel-set stable"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-channel-current"
+      ],
+      "value": "stable"
+    }
+  },
+  "update.channel.rc": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-channel-set rc'",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-channel-current)\" == \"rc\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-channel-set rc"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-channel-current"
+      ],
+      "value": "rc"
+    }
+  },
+  "update.channel.edge": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-channel-set edge'",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-channel-current)\" == \"edge\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-channel-set edge"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-channel-current"
+      ],
+      "value": "edge"
+    }
+  },
+  "update.channel.dev": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation 'omarchy-channel-set dev'",
+    "whenText": "",
+    "checkedText": "[[ \"$(omarchy-channel-current)\" == \"dev\" ]]",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-channel-set dev"
+    ],
+    "when": null,
+    "checked": {
+      "type": "equals",
+      "argv": [
+        "/usr/bin/omarchy-channel-current"
+      ],
+      "value": "dev"
+    }
+  },
+  "update.process.hyprsunset": {
+    "actionText": "omarchy-restart-hyprsunset",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-restart-hyprsunset"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.process.shell": {
+    "actionText": "omarchy-restart-shell",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-restart-shell"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.config.hyprland": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-refresh-hyprland",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-refresh-hyprland"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.config.hyprsunset": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-refresh-hyprsunset",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-refresh-hyprsunset"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.config.plymouth": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-refresh-plymouth",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-refresh-plymouth"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.config.tmux": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-refresh-tmux",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-refresh-tmux"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.config.shell": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-refresh-shell",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-refresh-shell"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.hardware.audio": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-restart-audio",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-restart-audio"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.hardware.wifi": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-restart-wifi",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-restart-wifi"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.hardware.bluetooth": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-restart-bluetooth",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-restart-bluetooth"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.hardware.trackpad": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-restart-trackpad",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-restart-trackpad"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.password.drive": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation omarchy-drive-password",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/omarchy-drive-password"
+    ],
+    "when": null,
+    "checked": null
+  },
+  "update.password.user": {
+    "actionText": "omarchy-launch-floating-terminal-with-presentation passwd",
+    "whenText": "",
+    "checkedText": "",
+    "provider": "",
+    "argv": [
+      "/usr/bin/omarchy-launch-floating-terminal-with-presentation",
+      "/usr/bin/passwd"
+    ],
+    "when": null,
+    "checked": null
+  }
+}

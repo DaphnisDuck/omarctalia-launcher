@@ -3,10 +3,11 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import "MenuModel.js" as MenuModel
+import "CommandPolicy.js" as Policy
 
 Item {
   id: root
-  property string omarchyPath: Quickshell.env("OMARCHY_PATH") || "/usr/share/omarchy"
+  property string omarchyPath: "/usr/share/omarchy"
   property var appLibrary: null
   property bool opened: false
   property string activeMenu: "root"
@@ -81,7 +82,7 @@ Item {
   property string userMenuPath: Quickshell.env("HOME") + "/.config/omarchy/extensions/omarchy-menu.jsonc"
   signal changed()
   function rebuildDisplay() { changed() }
-  function shellQuote(value) { return "'" + String(value || "").replace(/'/g, "'\\''") + "'" }
+  readonly property string broker: decodeURIComponent(Qt.resolvedUrl("command-broker.py").toString().replace(/^file:\/\//, ""))
   function prepare() {
     evaluateGuards()
     loadProviderForMenu("apps")
@@ -122,6 +123,17 @@ Item {
     root.providerRevision += 1
     root.providersLoaded = ({})
     root.providerQueue = []
+    var blocked = 0
+    for (var id in mergedMenu.items) {
+      var row = mergedMenu.items[id]
+      var policy = Policy.entries[id]
+      row.policyBlocked = Boolean((row.action || row.when || row.checked || row.provider) &&
+          (!policy || row.action !== policy.actionText || row.when !== policy.whenText ||
+           row.checked !== policy.checkedText || row.provider !== policy.provider ||
+           (row.action && !policy.argv)))
+      if (row.policyBlocked) blocked++
+    }
+    root.setIssue("policy", blocked ? "Some menu commands are unsupported and have been hidden." : "")
     root.items = mergedMenu.items
     root.itemOrder = mergedMenu.itemOrder
     root.rowsLoaded = true
@@ -136,23 +148,10 @@ Item {
     }
   }
 
-  // Each known provider is a tiny bash one-liner that enumerates a list and
-  // emits one tab-delimited row per item: `label\tvalue\tcurrent`. The shell
-  // turns those into menu items children of `menuId`. A `volatile` provider
-  // re-runs every time its submenu is entered, so a font installed since the
-  // shell started shows up without restarting it.
+  // Only these typed providers may enumerate dynamic rows.
   readonly property var providers: ({
-    "fonts": {
-      script: "current=$(omarchy-font-current 2>/dev/null); omarchy-font-list 2>/dev/null | while read -r f; do [[ -z $f ]] && continue; printf '%s\\t%s\\t%s\\n' \"$f\" \"$f\" \"$current\"; done",
-      icon: "",
-      volatile: true,
-      actionFor: function(value) { return "omarchy-font-set " + root.shellQuote(value) }
-    },
-    "power-profiles": {
-      script: "current=$(powerprofilesctl get 2>/dev/null); omarchy-powerprofiles-list 2>/dev/null | while read -r p; do [[ -z $p ]] && continue; printf '%s\\t%s\\t%s\\n' \"$p\" \"$p\" \"$current\"; done",
-      icon: "\udb81\udc0b",
-      actionFor: function(value) { return "omarchy-powerprofiles-set autodetect " + root.shellQuote(value) }
-    }
+    "fonts": {icon: "", volatile: true, actionFor: function(value) { return "fonts:" + value }},
+    "power-profiles": {icon: "󱐋", actionFor: function(value) { return "power-profiles:" + value }}
   })
 
   function slugify(value) {
@@ -203,7 +202,7 @@ Item {
 
   function startProviderForMenu(id) {
     var entry = root.item(id)
-    if (!entry || !entry.provider || root.providersLoaded[id]) return
+    if (!entry || entry.policyBlocked || !entry.provider || root.providersLoaded[id]) return
     if (entry.provider === "apps") {
       root.providersLoaded[id] = true
       root.mergeAppRows()
@@ -221,7 +220,7 @@ Item {
     providerProc.revision = root.providerRevision
     providerProc.collected = ""
     providerProc.overflow = false
-    providerProc.command = ["timeout", "--kill-after=2s", root.lookupTimeoutSeconds + "s", "bash", "-c", "set -o pipefail; " + spec.script]
+    providerProc.command = ["/usr/bin/timeout", "--kill-after=2s", root.lookupTimeoutSeconds + "s", "/usr/bin/python3", "-I", root.broker, "provider", entry.provider]
     providerProc.running = true
   }
 
@@ -293,7 +292,7 @@ Item {
 
   function loadProviderForMenu(id) {
     var entry = root.item(id)
-    if (!entry || !entry.provider || root.providersLoaded[id]) return
+    if (!entry || entry.policyBlocked || !entry.provider || root.providersLoaded[id]) return
 
     // Native providers don't touch providerProc, so they never need to queue.
     if (entry.provider === "apps") {
@@ -345,7 +344,7 @@ Item {
   // submenus are also hidden when none of their descendants are visible;
   // provider-backed menus stay visible because their rows load on demand.
   function isVisible(entry) {
-    return MenuModel.isVisible(root.items, root.itemOrder, root.whenResults, entry)
+    return !entry.policyBlocked && MenuModel.isVisible(root.items, root.itemOrder, root.whenResults, entry)
   }
 
   // Label with the ✓ marker baked in when `checked:` evaluated truthy.
@@ -419,10 +418,8 @@ Item {
 
   // ---------------------------------------------------------------- guards
   //
-  // `when:` (visibility) and `checked:` (✓ marker) are bash expressions the
-  // shell wasn't allowed to evaluate before the perf rewrite. Now the shell
-  // batches them into one bash subprocess per (re)load so the open path
-  // never has to wait on them.
+  // The broker evaluates fixed typed checks from its bundled policy.
+  // Shared menu expressions are never passed to this process.
 
   property var whenResults: ({})       // id → true|false (allow visibility)
   property var checkedResults: ({})    // id → true|false (show ✓)
@@ -441,17 +438,10 @@ Item {
     }
     root.guardsPending = false
 
-    var script = MenuModel.guardScript(root.items)
-    if (!script) {
-      root.whenResults = ({})
-      root.checkedResults = ({})
-      root.setIssue("guards", "")
-      return
-    }
     guardProc.collected = ""
     guardProc.revision = root.providerRevision
     guardProc.overflow = false
-    guardProc.command = ["timeout", "--kill-after=2s", root.lookupTimeoutSeconds + "s", "bash", "-c", script]
+    guardProc.command = ["/usr/bin/timeout", "--kill-after=2s", root.lookupTimeoutSeconds + "s", "/usr/bin/python3", "-I", root.broker, "guards"]
     guardProc.running = true
   }
 
