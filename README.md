@@ -4,6 +4,12 @@ A searchable Omarchy menu and application launcher with optional vi navigation a
 
 Version **1.0.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
+## Screenshots
+
+![Category navigation](screenshots/home.png)
+
+![Installed applications](screenshots/apps.png)
+
 ## Use
 
 ```sh
