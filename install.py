@@ -13,7 +13,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parent
 FILES = ['MenuModel.js','MenuDescriptions.js','IconResolver.qml','run-action.sh',
-         'MenuCatalog.qml','Launcher.qml','manifest.json','LICENSE-OMARCHY','UPSTREAM.md']
+         'MenuCatalog.qml','Launcher.qml','manifest.json','LICENSE','LICENSE-OMARCHY','UPSTREAM.md']
 
 def digest(data): return hashlib.sha256(data).hexdigest()
 

@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.0.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. This is a local release; nothing has been published to a remote repository.
+Version **1.0.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Use
 
@@ -50,7 +50,42 @@ Colors bind to Omarchy's shared `qs.Commons.Color.menu` object. Themes and user 
 - Commands run through a detached supervisor. Unsuccessful exits produce a desktop notification and a journal entry tagged `omarctalia-launcher`. Interrupt/termination exits are treated as cancellation. Actions are not timed out: installers and applications may legitimately run for a long time.
 - An application's successful launch request does **not** prove its window appeared. The supervisor reports command exit failures; it cannot detect every later application crash. Arbitrary menu actions remain trusted shell commands, just as in Omarchy's menu.
 
-## Install or upgrade
+## Standard Omarchy installation
+
+Install with Omarchy's plugin manager:
+
+```sh
+omarchy plugin add https://github.com/DaphnisDuck/omarctalia-launcher --enable
+```
+
+The repository root contains the manifest and runtime files. No build step or custom installer is required for this route. Python and Node.js are development tools, not runtime requirements for standard installation.
+
+Open the launcher with the command in **Use** above. To bind Super+Space, add this to `~/.config/hypr/bindings.lua`:
+
+```lua
+hl.unbind("SUPER + SPACE")
+o.bind("SUPER + SPACE", "Omarctalia Launcher", "omarchy-shell shell summon omarctalia.launcher '{}'")
+```
+
+This replaces the stock Super+Space menu binding. Save, then run `hyprctl reload` and `hyprctl configerrors`.
+
+Update a standard Git installation with:
+
+```sh
+omarchy plugin update omarctalia.launcher
+```
+
+Save any local QML edits before updating. The vi-setting preservation described below belongs to the custom installer, not Omarchy's Git updater.
+
+Remove the plugin with:
+
+```sh
+omarchy plugin remove omarctalia.launcher
+```
+
+Also remove any launcher keybinding you added (including its `hl.unbind` if restoring the default). Removal does not edit your keybindings. Backups made by the custom installer remain in its documented backup directory.
+
+## Local install or upgrade
 
 Requires Python 3.9+, Quickshell, Bash, coreutils `timeout`, `find`, `uwsm-app`, `gtk-launch`, `notify-send`, `logger`, and the Omarchy theme interface. Testing also needs Node.js and QtTest.
 
@@ -104,3 +139,7 @@ Live Wayland focus, multiple displays, suspend/resume, and login-session behavio
 - `install.py` and `tests/`: repeatable installation, rollback and validation.
 
 See `UPSTREAM.md` and `LICENSE-OMARCHY` for the Omarchy-derived code's provenance and license.
+
+## License
+
+Original Omarctalia code is available under the MIT license in `LICENSE`. Omarchy-derived code retains its upstream MIT notice in `LICENSE-OMARCHY`; see `UPSTREAM.md`. Application icons are loaded from the user’s installed system and are not bundled in this repository.
