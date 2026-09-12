@@ -13,8 +13,8 @@ Item {
         function test_decoding_and_cache() {
             tryCompare(chromium, 'status', Image.Ready)
             tryCompare(discord, 'status', Image.Ready)
-            verify(String(chromium.source).indexOf('file:') === 0)
-            verify(String(discord.source).indexOf('file:') === 0)
+            verify(String(chromium.source).indexOf('data:image/png;base64,') === 0)
+            verify(String(discord.source).indexOf('data:image/png;base64,') === 0)
             compare(resolver.resolve('missing-omarctalia-test', '', true), '')
             compare(resolver.fileUrl('/tmp/a #b?.png'), 'file:///tmp/a%20%23b%3F.png')
             var count = resolver.scanCount

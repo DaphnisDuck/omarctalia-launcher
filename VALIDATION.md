@@ -11,3 +11,7 @@ Validated on 2026-09-11 with Omarchy 4.0.3-1 and Quickshell 0.3.1.
 - Read-only broker guard enumeration completed against the installed system.
 
 The former generated-shell guard and arbitrary shell-supervisor tests were removed together with those execution paths. This is not a security audit. Live Wayland focus, multiple displays and suspend/resume are not exhaustively tested. See SECURITY.md for intentionally unsupported menu operations.
+
+## 1.1.1 checks
+
+Added checks for linked roots/files/directories, named pipes, icon entry/byte/traversal budgets, immutable image snapshots, helper output overflow, timeout, and descendant process cleanup. Real QML PNG decoding, cache preservation after budget failure, and navigation/theme tests are rerun for this version.

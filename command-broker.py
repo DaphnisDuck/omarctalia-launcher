@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 """Typed operations only. Shared menu text is never an executable program."""
+import ctypes
+import base64
+import selectors
+import signal
+import stat
+import struct
+import time
 import json
 import os
 from pathlib import Path
@@ -12,8 +19,142 @@ POLICY = json.loads(Path(__file__).with_name('CommandPolicy.json').read_text())
 ENV = {k:v for k,v in os.environ.items() if k not in {'BASH_ENV','ENV','PYTHONPATH','PYTHONHOME','LD_PRELOAD','LD_LIBRARY_PATH','SHELLOPTS','BASHOPTS','CDPATH'} and not k.startswith('BASH_FUNC_')}
 ENV['PATH'] = '/usr/bin'
 
-def run(argv, timeout=8):
-    return subprocess.run(argv, env=ENV, capture_output=True, text=True, timeout=timeout, check=False)
+# Adopt orphaned grandchildren so group cleanup can reap them as well.
+if ctypes.CDLL(None, use_errno=True).prctl(36, 1, 0, 0, 0) != 0:
+    raise OSError('Cannot establish child reaping boundary')
+
+def terminate(signum, frame):
+    raise SystemExit(128 + signum)
+
+signal.signal(signal.SIGTERM, terminate)
+MAX_OUTPUT = 65536
+
+def run(argv, timeout=8, byte_limit=MAX_OUTPUT):
+    """Bound stdout + stderr before decoding; kill the entire child group."""
+    child = subprocess.Popen(argv, env=ENV, stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE, start_new_session=True)
+    streams = selectors.DefaultSelector()
+    streams.register(child.stdout, selectors.EVENT_READ)
+    streams.register(child.stderr, selectors.EVENT_READ)
+    output = {child.stdout: bytearray(), child.stderr: bytearray()}
+    deadline = time.monotonic() + timeout
+    total = 0
+    try:
+        while streams.get_map():
+            remaining = deadline - time.monotonic()
+            if remaining <= 0: raise subprocess.TimeoutExpired(argv, timeout)
+            for key, _ in streams.select(min(remaining, 0.1)):
+                chunk = os.read(key.fileobj.fileno(), min(4096, byte_limit - total + 1))
+                if not chunk:
+                    streams.unregister(key.fileobj)
+                    continue
+                total += len(chunk)
+                if total > byte_limit: raise ValueError('Helper output limit exceeded')
+                output[key.fileobj].extend(chunk)
+        child.wait(timeout=max(0.001, deadline-time.monotonic()))
+        return subprocess.CompletedProcess(argv, child.returncode,
+            output[child.stdout].decode('utf-8', 'replace'), output[child.stderr].decode('utf-8', 'replace'))
+    finally:
+        # Also stop descendants left running after the parent exits.
+        try: os.killpg(child.pid, signal.SIGKILL)
+        except ProcessLookupError: pass
+        child.wait()
+        while True:
+            try: os.waitpid(-child.pid, 0)
+            except ChildProcessError: break
+            except InterruptedError: continue
+        streams.close()
+        child.stdout.close()
+        child.stderr.close()
+
+# Icon bytes, not mutable filenames, cross into the QML image loader.
+ICON_ENTRIES = 512
+ICON_BYTES = 2 * 1024 * 1024
+ICON_FILE_BYTES = 128 * 1024
+ICON_VISITS = 65536
+
+def icon_roots():
+    home = str(Path.home())
+    data = os.environ.get('XDG_DATA_HOME') or home + '/.local/share'
+    roots = [home+'/.icons', data+'/icons', data+'/pixmaps']
+    for folder in (os.environ.get('XDG_DATA_DIRS') or '/usr/local/share:/usr/share').split(':'):
+        if folder.startswith('/'):
+            roots.extend([folder+'/icons', folder+'/pixmaps'])
+    return list(dict.fromkeys(roots))
+
+def open_directory(path):
+    # O_NOFOLLOW at every component prevents root and descendant symlink races.
+    if not os.path.isabs(path) or '..' in Path(path).parts: raise ValueError('Invalid icon root')
+    fd=os.open('/', os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        for part in Path(path).parts[1:]:
+            next_fd=os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+            os.close(fd); fd=next_fd
+        return fd
+    except BaseException:
+        os.close(fd)
+        raise
+
+def icon_data(fd, name):
+    image_fd=os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)
+    try:
+        info=os.fstat(image_fd)
+        if not stat.S_ISREG(info.st_mode) or not 0 < info.st_size <= ICON_FILE_BYTES: return None
+        data=b''
+        while len(data)<=ICON_FILE_BYTES:
+            chunk=os.read(image_fd,min(8192,ICON_FILE_BYTES+1-len(data)))
+            if not chunk: break
+            data+=chunk
+        if len(data)>ICON_FILE_BYTES: return None
+        # PNG only: no SVG external references, XML entities or file URLs.
+        if len(data)<24 or data[:8]!=b'\x89PNG\r\n\x1a\n' or data[12:16]!=b'IHDR': return None
+        width,height=struct.unpack('>II',data[16:24])
+        if not (0<width<=512 and 0<height<=512): return None
+        return 'data:image/png;base64,'+base64.b64encode(data).decode('ascii')
+    finally: os.close(image_fd)
+
+def scan_icons(requested, roots=None, entry_limit=ICON_ENTRIES, byte_limit=ICON_BYTES, visit_limit=ICON_VISITS):
+    if len(requested)>entry_limit: raise ValueError('Too many icon requests')
+    wanted=set(requested)
+    total=0; emitted=0; visits=0
+    deadline=time.monotonic()+8
+    def walk(fd, parent, depth=0):
+        nonlocal total, emitted, visits
+        if depth>16: return
+        with os.scandir(fd) as entries:
+            for entry in entries:
+                visits+=1
+                if visits>visit_limit or time.monotonic()>deadline: raise ValueError('Icon traversal budget exceeded')
+                if entry.is_symlink(): continue
+                if entry.is_dir(follow_symlinks=False):
+                    if entry.name in {"actions", "status", "places", "devices", "mimetypes", "emblems", "animations", "categories", "stock", "panel", "emotes", "cursors", "scalable", "symbolic"}: continue
+                    try: child=os.open(entry.name,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=fd)
+                    except OSError: continue
+                    try: yield from walk(child,parent+'/'+entry.name,depth+1)
+                    finally: os.close(child)
+                elif entry.name.lower().endswith('.png'):
+                    path=parent+'/'+entry.name
+                    name=entry.name[:-4]
+                    matches=wanted.intersection((name,path))
+                    if not matches: continue
+                    try: data=icon_data(fd,entry.name)
+                    except OSError: continue
+                    if not data: continue
+                    for key in sorted(matches):
+                        record=json.dumps({'name':key,'source':data},ensure_ascii=True)
+                        size=len(record.encode())+1
+                        if emitted>=entry_limit or total+size>byte_limit: raise ValueError('Icon output budget exceeded')
+                        total+=size; emitted+=1; wanted.remove(key)
+                        yield record
+                if not wanted: return
+    for root in roots if roots is not None else icon_roots():
+        if not wanted: break
+        if not os.path.isabs(root) or os.path.realpath(root)!=os.path.normpath(root): continue
+        try: fd=open_directory(root)
+        except OSError: continue
+        try: yield from walk(fd,os.path.normpath(root))
+        finally: os.close(fd)
+
 
 def expand(value):
     home = str(Path.home())
@@ -60,23 +201,7 @@ def action(mode, value):
 def main():
     mode=sys.argv[1]
     if mode=='icons':
-        for directory in sys.argv[2:]:
-            if not os.path.isabs(directory) or not os.path.isdir(directory): continue
-            seen=set()
-            for parent,dirs,files in os.walk(directory,followlinks=True):
-                real=os.path.realpath(parent)
-                if real in seen:
-                    dirs[:]=[]
-                    ancestor=os.path.dirname(parent)
-                    while ancestor.startswith(directory):
-                        if os.path.realpath(ancestor)==real: raise ValueError('Icon directory cycle')
-                        next_parent=os.path.dirname(ancestor)
-                        if next_parent==ancestor: break
-                        ancestor=next_parent
-                    continue
-                seen.add(real)
-                for name in files:
-                    if name.lower().endswith(('.png','.svg','.xpm')): print(os.path.join(parent,name))
+        for record in scan_icons(sys.argv[2:]): print(record,flush=True)
         return 0
     if mode=='guards':
         for key,spec in POLICY.items():

@@ -49,7 +49,6 @@
             check(!results.some(function(e) { return e.id === "trigger.hardware.laptop-display" }), "Guard hides action")
             catalog.mergeProviderRows("Fira Code\tFira Code\tFira Code\nFira-Code\tFira-Code\tFira Code", "style.font", "fonts")
             check(catalog.itemOrder.filter(function(id) { return catalog.item(id).parent === "style.font" }).length === 2, "Provider collision preserves both fonts")
-            check(catalog.shellQuote("a'b") === "'a'\\''b'", "Provider shell quoting")
             root.close()
             root.open("{}")
             check(root.activeMenu === "root" && searchField.text === "", "Reopen reset")

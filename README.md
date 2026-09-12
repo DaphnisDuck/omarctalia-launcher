@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.1.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.1.1**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -50,7 +50,7 @@ Shared menu files are treated as untrusted data. Their action, condition, and pr
 
 This changes upstream compatibility: new or changed Omarchy commands require a reviewed policy update. See `SECURITY.md` for the current unsupported entries and execution boundary. The plugin continues to read menu presentation data and application entries live.
 
-External processes start through absolute `/usr/bin` paths. Child processes receive a system-only PATH with shell startup hooks removed. Icon scanning uses Python filesystem APIs. App launching is an explicit user action and uses the selected desktop-entry ID through gtk-launch; installed desktop entries remain executable application definitions.
+External processes start through absolute `/usr/bin` paths. Child processes receive a system-only PATH with shell startup hooks removed. Icon scanning uses bounded Python filesystem traversal without following symlinks. Only validated PNG snapshots beneath configured icon roots reach the image loader; other icons use the existing placeholder. App launching is an explicit user action and uses the selected desktop-entry ID through gtk-launch; installed desktop entries remain executable application definitions.
 
 Malformed menus retain the previous working menu. Queries have time and output limits. Icon indexing is cached and preserves its previous results after failure. Unsuccessful selected commands produce a notification. These checks cannot guarantee that an application window appeared or detect every later crash.
 

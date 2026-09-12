@@ -57,7 +57,7 @@ function cleanupTestCase() { console.log("OMARCTALIA_TEST_RESULT=" + JSON.string
             execute_qml(temp/name,env)
         # A filesystem cycle causes a real find failure; the previous cache must survive.
         bad=temp/'bad-data/icons'; bad.mkdir(parents=True)
-        (bad/'loop').symlink_to(bad,target_is_directory=True)
+        for index in range(65546): (bad/str(index)).touch()
         name='IconFailureChecks.qml'
         (temp/name).write_text((ROOT/'tests'/name).read_text().replace('import "../" as Plugin', 'import "." as Plugin'))
         execute_qml(temp/name,dict(env,XDG_DATA_HOME=str(temp/'bad-data')))

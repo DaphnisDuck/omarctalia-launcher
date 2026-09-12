@@ -44,6 +44,7 @@ Item {
             }
             verify(catalog.acceptSource('{"custom":{"action":"echo injected"}}', true))
             verify(!catalog.isVisible(catalog.item('custom')))
+            verify(!catalog.issues.policy)
         }
         function test_description_override_allowed() {
             catalog.acceptSource('{"about":{"description":"Personal description"}}', true)

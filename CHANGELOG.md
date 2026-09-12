@@ -1,3 +1,10 @@
+# 1.1.1 — Filesystem and resource boundaries
+
+- Validate icon files beneath approved roots without following symlinks; pass bounded PNG snapshots to Qt.
+- Cap scan bytes, records, visits, depth and image size; stop producers on overflow.
+- Bound combined helper output and kill/reap process groups on overflow or timeout.
+- Remove the hidden-menu-items warning while retaining command restrictions.
+
 # 1.1.0 — Marketplace security review
 
 - Stop evaluating shared menu strings as shell programs.

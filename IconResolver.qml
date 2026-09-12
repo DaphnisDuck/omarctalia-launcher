@@ -19,6 +19,7 @@ Item {
     property int scanCount: 0
     property bool overflow: false
     property int scannedLines: 0
+    property int scannedBytes: 0
     property string statusMessage: ""
 
     function invalidate() {
@@ -37,31 +38,12 @@ Item {
 
     function resolve(icon, preferred, fileOnly) {
         var name = String(icon || "")
-        if (name.charAt(0) === "/") return fileUrl(name)
-        if (/^(file:|image:|qrc:)/.test(name)) return name
-        if (!fileOnly) {
-            // The boolean overload checks existence. The string fallback overload
-            // generates a URL this installed image provider cannot resolve.
-            var themed = name ? Quickshell.iconPath(name, true) : ""
-            if (themed) return themed
-            if (String(preferred || "").indexOf("file:") === 0) return preferred
+        if (name.indexOf("file:") === 0) {
+            try { name = decodeURIComponent(name.replace(/^file:\/\//, "")) } catch (e) { return "" }
         }
-        var found = root.files[name]
-        if (found) return fileUrl(found)
-        if (!fileOnly && preferred && String(preferred).indexOf("?fallback=") < 0) return preferred
-        // Leave unknown icons empty so the row's letter fallback remains visible.
-        return ""
-    }
-
-    function addFile(path) {
-        var name = path.slice(path.lastIndexOf("/") + 1).replace(/\.(svg|png|xpm)$/i, "")
-        var size = path.match(/\/(\d+)x\d+\//)
-        var score = /\.svg$/i.test(path) ? 0 : (size ? 10 + Math.abs(Number(size[1]) - 48) : 1000)
-        // Equal-quality results keep the earlier XDG directory's icon.
-        if (root.pendingScores[name] === undefined || score < root.pendingScores[name]) {
-            root.pendingFiles[name] = path
-            root.pendingScores[name] = score
-        }
+        // Only bounded PNG snapshots returned by the broker are image sources.
+        var source = Object.prototype.hasOwnProperty.call(root.files, name) ? root.files[name] : ""
+        return typeof source === "string" && source.startsWith("data:image/png;base64,") ? source : ""
     }
 
     function refresh(force) {
@@ -69,13 +51,13 @@ Item {
         if (scan.running) { if (dirty || force) refreshPending = true; return }
         if (!force && now < retryAfter) return
         if (!force && !dirty && now - lastRefresh < cacheLifetimeMs) return
-        var home = Quickshell.env("HOME")
-        var dataHome = Quickshell.env("XDG_DATA_HOME") || home + "/.local/share"
-        var dataDirs = (Quickshell.env("XDG_DATA_DIRS") || "/usr/local/share:/usr/share").split(":")
-        var directories = [home + "/.icons", dataHome + "/icons", dataHome + "/pixmaps"]
-        for (var i = 0; i < dataDirs.length; i++) {
-            if (!dataDirs[i]) continue
-            directories.push(dataDirs[i] + "/icons", dataDirs[i] + "/pixmaps")
+        var requested = ["chromium", "omarchy-discord"]
+        for (var app of (DesktopEntries.applications.values || [])) {
+            var name = String(app.icon || "")
+            if (name.indexOf("file://") === 0) {
+                try { name = decodeURIComponent(name.substring(7)) } catch (e) { continue }
+            }
+            if (name && name.length <= 1024 && requested.indexOf(name) < 0 && requested.length < 512) requested.push(name)
         }
         pendingFiles = ({})
         pendingScores = ({})
@@ -83,20 +65,32 @@ Item {
         dirty = false
         overflow = false
         scannedLines = 0
+        scannedBytes = 0
         scanCount++
         // Paths are separate arguments, never interpolated into the shell script.
         var broker = decodeURIComponent(Qt.resolvedUrl("command-broker.py").toString().replace(/^file:\/\//, ""))
-        scan.command = ["/usr/bin/timeout", "--kill-after=2s", root.scanTimeoutSeconds + "s", "/usr/bin/python3", "-I", broker, "icons"].concat(directories)
+        scan.command = ["/usr/bin/python3", "-I", broker, "icons"].concat(requested)
         scan.running = true
     }
 
     Process {
         id: scan
         stdout: SplitParser {
-            onRead: function(line) {
+            onRead: function(data) {
+                if (root.overflow) return
                 root.scannedLines++
-                if (root.scannedLines < 200000 && line.length < 8192) root.addFile(line)
-                else root.overflow = true
+                root.scannedBytes += data.length + 1
+                if (root.scannedLines > 512 || root.scannedBytes > 2097152 || data.length > 180000) {
+                    root.overflow = true
+                    scan.signal(9)
+                    return
+                }
+                try {
+                    var row = JSON.parse(data)
+                    if (typeof row.name !== "string" || row.name.length > 1024 ||
+                        typeof row.source !== "string" || !row.source.startsWith("data:image/png;base64,")) throw new Error("Invalid icon record")
+                    root.pendingFiles[row.name] = row.source
+                } catch (e) { root.overflow = true; scan.signal(9) }
             }
         }
         onExited: function(exitCode, exitStatus) {

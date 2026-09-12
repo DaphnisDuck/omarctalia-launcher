@@ -133,7 +133,7 @@ Item {
            (row.action && !policy.argv)))
       if (row.policyBlocked) blocked++
     }
-    root.setIssue("policy", blocked ? "Some menu commands are unsupported and have been hidden." : "")
+    root.setIssue("policy", "")
     root.items = mergedMenu.items
     root.itemOrder = mergedMenu.itemOrder
     root.rowsLoaded = true
