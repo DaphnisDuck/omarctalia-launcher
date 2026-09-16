@@ -1,3 +1,10 @@
+# 1.1.2 — Menu input and installer filesystem boundaries
+
+- Read shared menus through a bounded no-follow helper with owner/type checks and a hard deadline.
+- Replace FileView reads with periodic refresh requests, preserving last-good menus.
+- Retain directory descriptors throughout installation, snapshots and restore; bound file reads and fsync publication.
+- Add symlink, FIFO, file-growth, deadline, target-swap and backup-swap regression tests.
+
 # 1.1.1 — Filesystem and resource boundaries
 
 - Validate icon files beneath approved roots without following symlinks; pass bounded PNG snapshots to Qt.

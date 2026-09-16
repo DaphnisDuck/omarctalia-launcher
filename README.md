@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.1.1**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.1.2**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -52,7 +52,7 @@ This changes upstream compatibility: new or changed Omarchy commands require a r
 
 External processes start through absolute `/usr/bin` paths. Child processes receive a system-only PATH with shell startup hooks removed. Icon scanning uses bounded Python filesystem traversal without following symlinks. Only validated PNG snapshots beneath configured icon roots reach the image loader; other icons use the existing placeholder. App launching is an explicit user action and uses the selected desktop-entry ID through gtk-launch; installed desktop entries remain executable application definitions.
 
-Malformed menus retain the previous working menu. Queries have time and output limits. Icon indexing is cached and preserves its previous results after failure. Unsuccessful selected commands produce a notification. These checks cannot guarantee that an application window appeared or detect every later crash.
+Menu files are read by an isolated helper, with owner/type checks, no symlink following and a 128 KiB limit per file. Changes are checked every second while open, every ten seconds while closed, and on opening. Malformed or unsafe menus retain the previous working menu. Queries have time and output limits. Icon indexing is cached and preserves its previous results after failure. Unsuccessful selected commands produce a notification. These checks cannot guarantee that an application window appeared or detect every later crash.
 
 ## Standard Omarchy installation
 
@@ -103,7 +103,7 @@ python3 install.py
 
 Default destination: `~/.config/omarchy/plugins/omarctalia.launcher/`.
 
-The installer copies only runtime files, preserves the vi switch, publishes complete files by rename, and verifies their contents. Existing unrelated files are left alone. Backups are stored outside the watched plugin folder at `${XDG_STATE_HOME:-~/.local/state}/omarctalia-launcher/backups/`. An installation failure triggers rollback.
+The installer copies only runtime files, preserves the vi switch, publishes complete files by descriptor-relative rename, fsyncs files and directories, and verifies their contents. Installation and backup paths must contain no symlinks. Existing files are bounded to 2 MiB and must be regular, single-link files owned by the current user, without group/world write access. Existing unrelated files are left alone. Backups are stored outside the watched plugin folder at `${XDG_STATE_HOME:-~/.local/state}/omarctalia-launcher/backups/`. An installation failure triggers rollback.
 
 For a new installation, enable the plugin through Omarchy's plugin menu. Existing enabled installations reload their saved code automatically. If necessary, run `omarchy-shell shell rescanPlugins`.
 

@@ -84,6 +84,7 @@ Item {
   function rebuildDisplay() { changed() }
   readonly property string broker: decodeURIComponent(Qt.resolvedUrl("command-broker.py").toString().replace(/^file:\/\//, ""))
   function prepare() {
+    refreshSources()
     evaluateGuards()
     loadProviderForMenu("apps")
     loadProviderForMenu(activeMenu)
@@ -393,27 +394,62 @@ Item {
     }
   }
 
-  // The JSONC sources are watched so live edits to the default file (or the
-  // user extension at ~/.config/omarchy/extensions/omarchy-menu.jsonc) take
-  // effect without restarting the shell.
-  FileView {
-    id: defaultMenuFile
-    path: root.autoLoad ? root.defaultMenuPath : ""
-    watchChanges: true
-    printErrors: false
-    onLoaded: if (root.autoLoad) root.acceptSource(text(), false)
-    onLoadFailed: function(error) { if (root.autoLoad) root.sourceUnavailable(false, error) }
-    onFileChanged: reload()
+  // FileView is intentionally absent: even an eager preload could read a FIFO
+  // or an unbounded shared file. Poll through the isolated bounded reader.
+  property string lastDefaultSource: ""
+  property string lastUserSource: ""
+  function refreshSources() {
+    if (!autoLoad || menuRead.running) return
+    menuRead.bytes = 0
+    menuRead.records = []
+    menuRead.failed = false
+    menuRead.running = true
   }
-
-  FileView {
-    id: userMenuFile
-    path: root.autoLoad ? root.userMenuPath : ""
-    watchChanges: true
-    printErrors: false
-    onLoaded: if (root.autoLoad) root.acceptSource(text(), true)
-    onLoadFailed: function(error) { if (root.autoLoad) root.sourceUnavailable(true, error) }
-    onFileChanged: reload()
+  Component.onCompleted: refreshSources()
+  Timer {
+    interval: root.opened ? 1000 : 10000
+    running: root.autoLoad
+    repeat: true
+    onTriggered: root.refreshSources()
+  }
+  Process {
+    id: menuRead
+    command: ["/usr/bin/timeout", "--kill-after=1s", "2s", "/usr/bin/python3", "-I", root.broker, "menus"]
+    property int bytes: 0
+    property var records: []
+    property bool failed: false
+    stdout: SplitParser {
+      onRead: function(data) {
+        if (menuRead.failed) return
+        menuRead.bytes += data.length
+        if (menuRead.bytes > 1600000 || menuRead.records.length >= 2 || data.length > 800000) {
+          menuRead.failed = true
+          menuRead.signal(15)
+          return
+        }
+        try { menuRead.records.push(JSON.parse(data)) }
+        catch (error) { menuRead.failed = true }
+      }
+    }
+    onExited: function(code, status) {
+      if (code !== 0 || status !== 0 || failed || records.length !== 2) {
+        root.sourceUnavailable(false, -1)
+        root.sourceUnavailable(true, -1)
+        return
+      }
+      for (var record of records) {
+        if (record.status === "ok" || (record.user && record.status === "missing")) {
+          var text = record.status === "missing" ? "{}" : record.text
+          var previous = record.user ? root.lastUserSource : root.lastDefaultSource
+          if (text !== previous || (record.user ? !root.userReady : !root.defaultReady)) {
+            if (root.acceptSource(text, record.user)) {
+              if (record.user) root.lastUserSource = text
+              else root.lastDefaultSource = text
+            }
+          } else root.setIssue(record.user ? "user-menu" : "default-menu", "")
+        } else root.sourceUnavailable(record.user, -1)
+      }
+    }
   }
 
   // ---------------------------------------------------------------- guards

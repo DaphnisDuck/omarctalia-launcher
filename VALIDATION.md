@@ -15,3 +15,7 @@ The former generated-shell guard and arbitrary shell-supervisor tests were remov
 ## 1.1.1 checks
 
 Added checks for linked roots/files/directories, named pipes, icon entry/byte/traversal budgets, immutable image snapshots, helper output overflow, timeout, and descendant process cleanup. Real QML PNG decoding, cache preservation after budget failure, and navigation/theme tests are rerun for this version.
+
+## 1.1.2 checks
+
+Added menu owner/type/mode/size, symlink/FIFO, growth-during-read and hard-deadline tests. Installer tests now cover linked target/backup/snapshot paths, linked files, FIFOs, oversized existing files, target-directory replacement during publication and backup-directory replacement during snapshot creation. Writes remain on retained descriptors and outside sentinel files stay unchanged. The actual installed default and custom menus both pass the broker checks. Full QML and existing regression suites are rerun.

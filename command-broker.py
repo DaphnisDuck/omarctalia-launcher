@@ -198,8 +198,49 @@ def action(mode, value):
         return ['/usr/bin/omarchy-font-set',value] if mode=='fonts' else ['/usr/bin/omarchy-powerprofiles-set','autodetect',value]
     raise ValueError('Unknown operation')
 
+MENU_BYTES = 128 * 1024
+
+def read_menu(path, owner, limit=MENU_BYTES):
+    path=Path(path)
+    parent=open_directory(str(path.parent))
+    try:
+        fd=os.open(path.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=parent)
+        try:
+            info=os.fstat(fd)
+            if not stat.S_ISREG(info.st_mode) or info.st_uid!=owner or info.st_mode & 0o022 or info.st_nlink!=1 or info.st_size>limit:
+                raise ValueError('Unsafe or oversized menu')
+            data=bytearray()
+            while True:
+                chunk=os.read(fd,min(8192,limit+1-len(data)))
+                if not chunk: break
+                data.extend(chunk)
+                if len(data)>limit: raise ValueError('Menu grew beyond limit')
+            return data.decode('utf-8')
+        finally: os.close(fd)
+    finally: os.close(parent)
+
+def menu_deadline(signum, frame):
+    raise TimeoutError('Menu read deadline exceeded')
+
+def menu_sources():
+    # A separate hard outer timeout also bounds blocked filesystem operations.
+    signal.signal(signal.SIGALRM,menu_deadline)
+    signal.setitimer(signal.ITIMER_REAL,1.5)
+    try:
+        sources=[(False,Path('/usr/share/omarchy/default/omarchy/omarchy-menu.jsonc'),os.stat('/usr/share/omarchy',follow_symlinks=False).st_uid),
+                 (True,Path.home()/'.config/omarchy/extensions/omarchy-menu.jsonc',os.getuid())]
+        for user,path,owner in sources:
+            try: result={'user':user,'status':'ok','text':read_menu(path,owner)}
+            except FileNotFoundError: result={'user':user,'status':'missing'}
+            except (OSError,ValueError): result={'user':user,'status':'error'}
+            print(json.dumps(result,ensure_ascii=True),flush=True)
+    finally: signal.setitimer(signal.ITIMER_REAL,0)
+
 def main():
     mode=sys.argv[1]
+    if mode=='menus':
+        menu_sources()
+        return 0
     if mode=='icons':
         for record in scan_icons(sys.argv[2:]): print(record,flush=True)
         return 0

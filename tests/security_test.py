@@ -65,3 +65,37 @@ with tempfile.TemporaryDirectory() as d:
  except subprocess.TimeoutExpired: pass
  else: raise AssertionError('No timeout')
 print('PASS: no symlinks/special files, icon budgets, immutable image bytes, bounded output and group reaping')
+with tempfile.TemporaryDirectory(prefix='omarctalia-menu-boundary-') as d:
+ p=Path(d); menu=p/'menu.jsonc';menu.write_text('{"apps":{}}')
+ assert b.read_menu(menu,os.getuid())=='{"apps":{}}'
+ def rejected(path,owner=os.getuid()):
+  try: b.read_menu(path,owner)
+  except (OSError,ValueError): return
+  raise AssertionError('Unsafe menu accepted')
+ rejected(menu,os.getuid()+1)
+ menu.chmod(0o666); rejected(menu);menu.chmod(0o600)
+ link=p/'link';link.symlink_to(menu);rejected(link)
+ folder=p/'folder';folder.symlink_to(p,target_is_directory=True);rejected(folder/'menu.jsonc')
+ fifo=p/'fifo';os.mkfifo(fifo);rejected(fifo)
+ rejected(p)
+ with menu.open('wb') as f:f.truncate(b.MENU_BYTES+1)
+ rejected(menu)
+ # Growth after fstat is still caught by the byte cap.
+ menu.write_bytes(b'x'*10)
+ original_read=b.os.read
+ grown=False
+ def growing_read(fd,size):
+  global grown
+  if not grown:
+   grown=True
+   with menu.open('ab') as f:f.write(b'x'*(b.MENU_BYTES+1))
+  return original_read(fd,size)
+ with patch.object(b.os,'read',side_effect=growing_read): rejected(menu)
+print('PASS: menu owner/type/size checks, symlink and FIFO refusal, and growth cap')
+# Exercise the production outer deadline even if both menu reads stall.
+import time
+program="import importlib.util,time; s=importlib.util.spec_from_file_location('b',"+repr(str(root/'command-broker.py'))+"); b=importlib.util.module_from_spec(s); s.loader.exec_module(b); b.read_menu=lambda *args: time.sleep(60); b.menu_sources()"
+started=time.monotonic()
+result=subprocess.run(['/usr/bin/timeout','--kill-after=1s','2s','/usr/bin/python3','-I','-c',program],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=4)
+assert result.returncode==124 and time.monotonic()-started<4
+print('PASS: hard deadline for stalled menu reads')

@@ -32,3 +32,11 @@ Each scan accepts at most 512 requested names, visits at most 65,536 entries wit
 Guard/provider helpers read stdout and stderr incrementally with a combined 64 KiB budget and an eight-second timeout. Cleanup kills their process group, waits for the direct child, and reaps adopted descendants using Linux subreaper semantics. SIGTERM from the outer query deadline also enters this cleanup. No helper capture_output buffering remains.
 
 The unsupported-menu notice was removed from the UI. Unsupported commands remain blocked.
+
+## Menu and installer boundaries (1.1.2)
+
+FileView no longer loads menu files. A periodic timer requests an isolated broker read instead. The broker traverses directory components without following links and opens the final file with O_NOFOLLOW and O_NONBLOCK. Only regular, single-link files with the expected owner and no group/world write permission are accepted. Each read is capped at 128 KiB, including growth after fstat. The default menu must have the installed system tree's owner; the custom menu must have the current user's UID. A 1.5-second alarm and a two-second external deadline (one-second kill grace) bound filesystem stalls. QML only parses bounded broker records; rejected input keeps the working menu. Missing custom files mean empty overrides.
+
+The optional installer uses lexical paths, never target resolve(). It retains no-follow directory descriptors for source, target and snapshots. All file reads, exclusive temporary creation, rename and unlink operations are relative to those descriptors. Existing reads are limited to 2 MiB and require regular, single-link, current-user-owned files without group/world write bits. Destination/snapshot directories must be owned by the user and not group/world writable. Published files and directories are fsynced. Restore validates the complete bounded snapshot into memory before mutation and, for new snapshots, verifies the recorded target directory identity. Automatic rollback uses the same retained destination descriptor.
+
+A directory renamed after opening remains the same filesystem object; writes stay on that retained object rather than following a replacement pathname. This does not protect against an actor who can directly modify the plugin's own trusted code or the contents of the retained directories as the same user.
