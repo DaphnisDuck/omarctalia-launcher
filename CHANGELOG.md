@@ -1,3 +1,8 @@
+# 1.2.1 — Dotfiles custom-menu support
+
+- Allow an explicit real custom-menu path without following symlinks or relaxing file checks.
+- Preserve this preference during local-installer upgrades.
+
 # 1.2.0 — Search calculator
 
 - Show arithmetic answers directly in search, including powers, percentages, parentheses, sqrt and abs.

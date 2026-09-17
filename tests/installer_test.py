@@ -88,3 +88,11 @@ with tempfile.TemporaryDirectory(prefix='omarctalia-backup-swap-') as d:
     assert (root/'retained-backup/Launcher.qml').read_text()=='old'
     assert (root/'retained-backup/snapshot.json').is_file()
 print('PASS: backup path swaps cannot redirect descriptor-relative writes')
+with tempfile.TemporaryDirectory(prefix='omarctalia-path-preference-') as d:
+    root=Path(d); target=root/'plugin';target.mkdir()
+    configured='/home/example/dotfiles/custom "menu".jsonc'
+    import json
+    (target/'MenuCatalog.qml').write_text('property string customMenuPath: '+json.dumps(configured)+'\n')
+    installer.install(target,root/'backups')
+    assert 'property string customMenuPath: '+json.dumps(configured) in (target/'MenuCatalog.qml').read_text()
+print('PASS: explicit menu path preference survives upgrades')

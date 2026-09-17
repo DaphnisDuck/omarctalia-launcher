@@ -44,3 +44,7 @@ A directory renamed after opening remains the same filesystem object; writes sta
 ## Calculator (1.2.0)
 
 Calculator.js parses only a fixed arithmetic grammar, capped at 256 characters, 128 tokens and 32 nested operations. It cannot access JavaScript objects, evaluate code, or invoke processes. Results must be finite. Clipboard writes occur only on selection, through Qt TextEdit.copy(), and contain only the formatted numeric result.
+
+## Explicit menu source (1.2.1)
+
+The trusted plugin setting customMenuPath can select an absolute real custom-menu file. It is passed as a separate broker argument, never as code, and cannot contain parent traversal. Owner/type/mode/link/size and deadline checks are unchanged. The default menu source is unchanged. The launcher does not discover or follow a symlink's target automatically.

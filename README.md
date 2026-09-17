@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.2.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.2.1**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -39,6 +39,16 @@ property bool viModeEnabled: false
 ```
 
 Typing then searches immediately, and Escape closes directly. The installer preserves this setting. Other source edits are backed up but not automatically merged during upgrades.
+
+## Dotfiles-managed custom menus
+
+If your custom menu is symlinked, set `customMenuPath` near the top of the installed `MenuCatalog.qml` to its actual absolute filename, for example:
+
+```qml
+property string customMenuPath: "/home/you/dotfiles/omarchy-menu.jsonc"
+```
+
+The default empty value uses `~/.config/omarchy/extensions/omarchy-menu.jsonc`. The configured path must have no symlink components; the same ownership, permission, regular-file, size and deadline checks apply. This is an explicit setting in your plugin code, not a path supplied by shared menu data. The optional local installer preserves it during upgrades.
 
 ## Calculator
 

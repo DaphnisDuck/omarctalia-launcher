@@ -79,6 +79,8 @@ Item {
   property var providersLoaded: ({})
   property var providerQueue: []
   property string defaultMenuPath: omarchyPath + "/default/omarchy/omarchy-menu.jsonc"
+  // Optional explicit real path for dotfiles-managed menus; no symlinks are followed.
+  property string customMenuPath: ""
   property string userMenuPath: Quickshell.env("HOME") + "/.config/omarchy/extensions/omarchy-menu.jsonc"
   signal changed()
   function rebuildDisplay() { changed() }
@@ -414,7 +416,7 @@ Item {
   }
   Process {
     id: menuRead
-    command: ["/usr/bin/timeout", "--kill-after=1s", "2s", "/usr/bin/python3", "-I", root.broker, "menus"]
+    command: ["/usr/bin/timeout", "--kill-after=1s", "2s", "/usr/bin/python3", "-I", root.broker, "menus", root.customMenuPath || root.userMenuPath]
     property int bytes: 0
     property var records: []
     property bool failed: false

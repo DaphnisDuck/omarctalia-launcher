@@ -99,3 +99,22 @@ started=time.monotonic()
 result=subprocess.run(['/usr/bin/timeout','--kill-after=1s','2s','/usr/bin/python3','-I','-c',program],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=4)
 assert result.returncode==124 and time.monotonic()-started<4
 print('PASS: hard deadline for stalled menu reads')
+# Explicit dotfiles paths retain every file check; they do not permit links.
+import contextlib
+import io
+with tempfile.TemporaryDirectory(prefix='omarctalia-explicit-menu-') as d:
+ p=Path(d); menu=p/'custom menu.jsonc';menu.write_text('{"about":{"description":"Dotfiles description"}}')
+ def custom_result(path):
+  capture=io.StringIO()
+  with contextlib.redirect_stdout(capture): b.menu_sources(str(path))
+  return [json.loads(line) for line in capture.getvalue().splitlines() if json.loads(line)['user']][0]
+ result=custom_result(menu)
+ assert result['status']=='ok' and 'Dotfiles description' in result['text']
+ link=p/'linked.jsonc';link.symlink_to(menu)
+ assert custom_result(link)['status']=='error'
+ menu.chmod(0o666);assert custom_result(menu)['status']=='error';menu.chmod(0o600)
+ for bad in ['relative.jsonc',str(p/'..'/'custom.jsonc')]:
+  try: b.menu_sources(bad)
+  except ValueError: pass
+  else: raise AssertionError('Unsafe configured path accepted')
+print('PASS: explicit dotfiles menu path retains no-follow and ownership/mode checks')

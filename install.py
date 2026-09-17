@@ -113,6 +113,14 @@ def install(target,backups):
         if current:
             match=re.search(rb'property bool viModeEnabled:\s*(true|false)',current)
             if match: payload['Launcher.qml']=re.sub(rb'(property bool viModeEnabled:\s*)(true|false)',lambda m:m[1]+match[1],payload['Launcher.qml'],count=1)
+        catalog=previous['MenuCatalog.qml']
+        if catalog:
+            pattern=rb'(property string customMenuPath:\s*)("(?:[^"\\]|\\.)*")'
+            setting=re.search(pattern,catalog)
+            if setting:
+                value=json.loads(setting[2])
+                if not isinstance(value,str): raise ValueError('Invalid custom menu setting')
+                payload['MenuCatalog.qml']=re.sub(pattern,lambda m:m[1]+json.dumps(value).encode(),payload['MenuCatalog.qml'],count=1)
         snapshot=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+secrets.token_hex(8)
         os.mkdir(snapshot,0o700,dir_fd=base); os.fsync(base)
         saved=os.open(snapshot,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=base)

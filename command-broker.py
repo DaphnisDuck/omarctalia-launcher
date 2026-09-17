@@ -222,13 +222,15 @@ def read_menu(path, owner, limit=MENU_BYTES):
 def menu_deadline(signum, frame):
     raise TimeoutError('Menu read deadline exceeded')
 
-def menu_sources():
+def menu_sources(custom_path=None):
+    if custom_path is not None and (not os.path.isabs(custom_path) or ".." in Path(custom_path).parts):
+        raise ValueError("Custom menu path must be absolute without parent traversal")
     # A separate hard outer timeout also bounds blocked filesystem operations.
     signal.signal(signal.SIGALRM,menu_deadline)
     signal.setitimer(signal.ITIMER_REAL,1.5)
     try:
         sources=[(False,Path('/usr/share/omarchy/default/omarchy/omarchy-menu.jsonc'),os.stat('/usr/share/omarchy',follow_symlinks=False).st_uid),
-                 (True,Path.home()/'.config/omarchy/extensions/omarchy-menu.jsonc',os.getuid())]
+                 (True,Path(custom_path) if custom_path is not None else Path.home()/'.config/omarchy/extensions/omarchy-menu.jsonc',os.getuid())]
         for user,path,owner in sources:
             try: result={'user':user,'status':'ok','text':read_menu(path,owner)}
             except FileNotFoundError: result={'user':user,'status':'missing'}
@@ -239,7 +241,7 @@ def menu_sources():
 def main():
     mode=sys.argv[1]
     if mode=='menus':
-        menu_sources()
+        menu_sources(sys.argv[2] if len(sys.argv) == 3 else None)
         return 0
     if mode=='icons':
         for record in scan_icons(sys.argv[2:]): print(record,flush=True)
