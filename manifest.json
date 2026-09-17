@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "omarctalia.launcher",
   "name": "Omarctalia Launcher",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "Steve",
   "description": "A searchable category menu and application launcher for Omarchy",
   "kinds": [

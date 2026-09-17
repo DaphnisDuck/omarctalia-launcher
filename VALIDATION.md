@@ -23,3 +23,7 @@ Added menu owner/type/mode/size, symlink/FIFO, growth-during-read and hard-deadl
 ## 1.3.0 checks
 
 Read-only discovery found the user's running VM on qemu:///system. Added mocked broker checks for stopped/running/paused/transitional states, rejected UUIDs and remote URIs, catalog limits, and fixed console argv. UI tests cover VM-name/alias search, category scope, status text, and dispatch. No real VM was started, resumed, or restarted by tests.
+
+## 1.4.0 checks
+
+Added URL recognition, limits and rejection tests plus mocked broker/UI dispatch checks. Query strings, fragments and shell-like URL text remain a single argument. The complete suite passes; no real browser navigation is performed by tests.

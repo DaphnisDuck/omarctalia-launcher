@@ -118,3 +118,10 @@ with tempfile.TemporaryDirectory(prefix='omarctalia-explicit-menu-') as d:
   except ValueError: pass
   else: raise AssertionError('Unsafe configured path accepted')
 print('PASS: explicit dotfiles menu path retains no-follow and ownership/mode checks')
+url='https://example.com/?a=1&literal=$(text)#part'
+assert b.action('url',url)==['/usr/bin/xdg-open',url]
+for invalid in ['file:///etc/passwd','javascript:alert(1)','https://user:pass@example.com','https://example.com:99999','https://example.com\n','--help']:
+ try:b.action('url',invalid)
+ except ValueError:pass
+ else:raise AssertionError('Invalid URL accepted')
+print('PASS: URL broker passes one literal argument and rejects unsupported inputs')

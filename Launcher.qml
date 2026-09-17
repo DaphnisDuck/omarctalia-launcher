@@ -6,6 +6,7 @@ import QtQuick.Layouts
 import Quickshell
 import "MenuDescriptions.js" as MenuDescriptions
 import "Calculator.js" as Calculator
+import "UrlSearch.js" as UrlSearch
 import qs.Commons
 import Quickshell.Wayland
 
@@ -148,6 +149,9 @@ Item {
             if (a.kind === "app" && b.kind === "app") return a.name.localeCompare(b.name) || a.id.localeCompare(b.id)
             return a.order - b.order
         })
+        var webUrl = UrlSearch.normalize(searchField.text)
+        if (webUrl) next.unshift({id:"web-url",kind:"url",name:"Open in browser",url:webUrl,
+                                 glyph:"↗",comment:webUrl})
         var calculation = Calculator.calculate(searchField.text)
         if (calculation) next.unshift({id: "calculator-result", kind: calculation.error ? "calculator-error" : "calculator",
             name: calculation.error || calculation.value, value: calculation.value || "", glyph: "=",
@@ -211,8 +215,8 @@ Item {
             enterMenu(entry.target || entry.id)
             return
         }
-        var mode = entry.kind === "app" ? "app" : "action"
-        var value = entry.kind === "app" ? entry.appId : entry.id
+        var mode = entry.kind === "url" ? "url" : entry.kind === "app" ? "app" : "action"
+        var value = entry.kind === "url" ? entry.url : entry.kind === "app" ? entry.appId : entry.id
         if (entry.action && /^(fonts|power-profiles):/.test(entry.action)) {
             mode = entry.action.split(":")[0]
             value = entry.action.substring(mode.length + 1)

@@ -7,6 +7,7 @@ import signal
 import stat
 import struct
 import time
+from urllib.parse import urlsplit
 import uuid
 import json
 import os
@@ -186,6 +187,14 @@ def provider(name):
     return rows.stdout.splitlines(), selected.stdout.strip()
 
 def action(mode, value):
+    if mode=='url':
+        if not value or len(value)>4096 or any(c.isspace() or ord(c)<32 or ord(c)==127 or c=='\\' for c in value):
+            raise ValueError('Invalid web URL')
+        parsed=urlsplit(value)
+        if parsed.scheme not in ('http','https') or not parsed.hostname or parsed.username is not None or parsed.password is not None:
+            raise ValueError('Only HTTP and HTTPS URLs are supported')
+        if parsed.port is not None and not 1<=parsed.port<=65535: raise ValueError('Invalid URL port')
+        return ['/usr/bin/xdg-open',value]
     if mode=='action':
         argv=POLICY[value]['argv']
         if not argv: raise ValueError('Unsupported action')

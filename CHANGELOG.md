@@ -1,3 +1,9 @@
+# 1.4.0 — Open web URLs
+
+- Recognize HTTP/HTTPS URLs and www. addresses in search.
+- Open the selected URL in the default browser with one literal argument to xdg-open.
+- Preserve query strings and fragments; reject unsupported schemes and embedded credentials.
+
 # 1.3.0 — Virtual machine search
 
 - Find local libvirt VMs by name or `vm`, with their current status shown.

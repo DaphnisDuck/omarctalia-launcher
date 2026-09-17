@@ -52,3 +52,7 @@ The trusted plugin setting customMenuPath can select an absolute real custom-men
 ## Virtual machines (1.3.0)
 
 Automatic discovery uses a read-only libvirt connection in the broker, limited to qemu:///system or qemu:///session. QML enforces a five-second discovery deadline with one-second kill grace. Results are capped at 128 guests and 64 KiB; display names are length/control-character checked. Starting/resuming occurs only after selection, using a canonical UUID and a fresh domain-state check. Console launch uses fixed absolute virt-manager argv; names never become shell text. No sudo or remote connection is used. Tests mock all start/resume/console effects.
+
+## Web URLs (1.4.0)
+
+Only explicit HTTP/HTTPS URLs (or www. addresses normalized to HTTPS) produce a browser result. The UI and broker reject whitespace/control characters, backslashes, embedded credentials and oversized URLs. The broker independently checks scheme, host and port and passes the original normalized URL as one argument to /usr/bin/xdg-open. No shell evaluation is used. Navigation occurs only after selection; typing does not contact the website.

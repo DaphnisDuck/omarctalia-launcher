@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.3.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.4.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -49,6 +49,10 @@ property string customMenuPath: "/home/you/dotfiles/omarchy-menu.jsonc"
 ```
 
 The default empty value uses `~/.config/omarchy/extensions/omarchy-menu.jsonc`. The configured path must have no symlink components; the same ownership, permission, regular-file, size and deadline checks apply. This is an explicit setting in your plugin code, not a path supplied by shared menu data. The optional local installer preserves it during upgrades.
+
+## Open URLs
+
+Paste or type an `https://` or `http://` URL and select **Open in browser**. Enter or a click passes the URL to your default browser through `xdg-open`. Addresses beginning with `www.` automatically use HTTPS. Ordinary app names and bare domains are not reinterpreted as URLs; add `https://` for a bare domain. Local file links, other protocols, and URLs containing embedded credentials are not supported.
 
 ## Virtual machines
 
@@ -113,7 +117,7 @@ Also remove any launcher keybinding you added (including its `hl.unbind` if rest
 
 ## Local install or upgrade
 
-Requires Python 3.9+, Quickshell, coreutils `timeout`, `uwsm-app`, `gtk-launch`, `notify-send`, `pacman`, and the installed Omarchy commands and theme interface. Executables must be available under `/usr/bin`. Testing also needs Node.js and QtTest.
+Requires Python 3.9+, Quickshell, coreutils `timeout`, `uwsm-app`, `gtk-launch`, `xdg-open`, `notify-send`, `pacman`, and the installed Omarchy commands and theme interface. Executables must be available under `/usr/bin`. Testing also needs Node.js and QtTest.
 
 From this source folder:
 

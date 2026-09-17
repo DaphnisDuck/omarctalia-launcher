@@ -59,6 +59,19 @@
                 verify(!results.some(function(e) { return e.kind === "vm" }))
             } finally { virtualMachines.rows = [] }
         }
+        function test_url_search() {
+            searchField.text = "https://example.com/path?a=1&b=2#part"
+            compare(results[0].kind, "url")
+            root.launch(0)
+            compare(root.opened, false)
+            compare(lastDispatch[3], "url")
+            compare(lastDispatch[4], "https://example.com/path?a=1&b=2#part")
+            root.open("{}")
+            searchField.text = "www.example.com"
+            compare(results[0].url, "https://www.example.com")
+            searchField.text = "file:///etc/passwd"
+            verify(!results.some(function(e) { return e.kind === "url" }))
+        }
         function test_menu() {
 
             root.open("{}")
