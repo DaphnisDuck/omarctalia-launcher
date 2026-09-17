@@ -7,6 +7,16 @@
         name: "LauncherIntegration"
         when: root.opened
         function init() { root.viModeEnabled = true; root.open("{}"); wait(50) }
+        function test_application_search_priority() {
+            tryVerify(function() { return catalog.item("setup.default.browser.chromium") !== null }, 4000)
+            catalog.whenResults = {"setup.default.browser.chromium": true}
+            searchField.text = "chromium"
+            verify(results.some(function(e) { return e.kind === "app" && e.appId === "chromium" }))
+            tryVerify(function() { return results.some(function(e) { return e.kind === "action" }) }, 4000)
+            compare(results[0].kind, "app")
+            compare(results[0].appId, "chromium")
+            compare(appList.currentIndex, 0)
+        }
         function test_menu() {
 
             root.open("{}")

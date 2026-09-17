@@ -126,6 +126,7 @@ Item {
         }
         next.sort(function(a, b) {
             if (query) {
+                if ((a.kind === "app") !== (b.kind === "app")) return a.kind === "app" ? -1 : 1
                 var aStarts = a.name.toLowerCase().indexOf(query) === 0
                 var bStarts = b.name.toLowerCase().indexOf(query) === 0
                 if (aStarts !== bStarts) return aStarts ? -1 : 1

@@ -1,3 +1,7 @@
+# 1.1.3 — Application search priority
+
+- Rank matching applications before menu commands and categories, so searching Chromium puts the application before default-browser settings.
+
 # 1.1.2 — Menu input and installer filesystem boundaries
 
 - Read shared menus through a bounded no-follow helper with owner/type checks and a hard deadline.

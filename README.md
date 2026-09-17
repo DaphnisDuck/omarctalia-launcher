@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.1.2**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.1.3**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -16,7 +16,7 @@ Version **1.1.2**. Tested on this machine with the Omarchy **4.0.3-1** package, 
 omarchy-shell shell summon omarctalia.launcher '{}'
 ```
 
-Home presents Omarchy's categories. Typing searches descendants of the current category, with paths and descriptions in the results. Application descriptions come from their desktop entries; menu descriptions live in `MenuDescriptions.js`. Existing explicit menu descriptions take precedence.
+Home presents Omarchy's categories. Typing searches descendants of the current category, with paths and descriptions in the results. Matching applications appear before menu commands and categories. Application descriptions come from their desktop entries; menu descriptions live in `MenuDescriptions.js`. Existing explicit menu descriptions take precedence.
 
 | Key | Normal mode | Insert mode |
 | --- | --- | --- |
