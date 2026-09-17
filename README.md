@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.2.1**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.3.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -49,6 +49,12 @@ property string customMenuPath: "/home/you/dotfiles/omarchy-menu.jsonc"
 ```
 
 The default empty value uses `~/.config/omarchy/extensions/omarchy-menu.jsonc`. The configured path must have no symlink components; the same ownership, permission, regular-file, size and deadline checks apply. This is an explicit setting in your plugin code, not a path supplied by shared menu data. The optional local installer preserves it during upgrades.
+
+## Virtual machines
+
+Type a VM's name into search, or `vm` to find all matching virtual machines. Results show the VM's status. Enter or a click starts a stopped VM and opens its virt-manager console; running VMs open without restarting, and paused VMs resume. Other transitional/error states require attention in virt-manager. Discovery never starts a VM.
+
+This optional feature needs virt-manager, its Python libvirt bindings, and permission to access the local libvirt connection. The default is `qemu:///system`; `qemu:///session` is also supported by setting `connectionUri` in `VirtualMachines.qml`. An empty connection disables VM search. Remote connections are not supported. No privilege escalation or permission changes are performed by the launcher. Discovery refreshes on opening, at most once every ten seconds; unavailable connections contribute no results. VM results appear in global and Apps searches, ahead of configuration commands.
 
 ## Calculator
 

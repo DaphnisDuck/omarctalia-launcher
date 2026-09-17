@@ -13,7 +13,7 @@ import stat
 
 ROOT = Path(os.path.abspath(__file__)).parent
 MAX_FILE = 2 * 1024 * 1024
-FILES = ['MenuModel.js','MenuDescriptions.js','Calculator.js','IconResolver.qml','command-broker.py','CommandPolicy.json','CommandPolicy.js',
+FILES = ['MenuModel.js','VirtualMachines.qml','MenuDescriptions.js','Calculator.js','IconResolver.qml','command-broker.py','CommandPolicy.json','CommandPolicy.js',
          'MenuCatalog.qml','Launcher.qml','manifest.json','LICENSE','LICENSE-OMARCHY','UPSTREAM.md']
 
 def digest(data): return hashlib.sha256(data).hexdigest()

@@ -37,6 +37,28 @@
             searchField.text = "chromium"
             verify(!results.some(function(e) { return e.kind === "calculator" || e.kind === "calculator-error" }))
         }
+        function test_vm_search_and_dispatch() {
+            var id = "12345678-1234-1234-1234-123456789abc"
+            virtualMachines.rows = [{id:"vm:test:"+id,kind:"vm",name:"Test Guest",uuid:id,uri:"qemu:///system",state:"Stopped"}]
+            try {
+                searchField.text = "test guest"
+                compare(results[0].kind, "vm")
+                verify(results[0].comment.indexOf("Start and open console") >= 0)
+                root.launch(0)
+                compare(root.opened, false)
+                compare(lastDispatch[0], "/usr/bin/timeout")
+                compare(lastDispatch[6], "vm-open")
+                compare(lastDispatch[7], "qemu:///system")
+                compare(lastDispatch[8], id)
+                root.open("{}")
+                searchField.text = "vm test"
+                compare(results[0].kind, "vm")
+                root.open("{}")
+                root.enterMenu("learn")
+                searchField.text = "test guest"
+                verify(!results.some(function(e) { return e.kind === "vm" }))
+            } finally { virtualMachines.rows = [] }
+        }
         function test_menu() {
 
             root.open("{}")

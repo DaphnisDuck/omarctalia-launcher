@@ -91,6 +91,8 @@ Item {
         onChanged: root.rebuild(false)
     }
 
+    VirtualMachines { id: virtualMachines; onChanged: root.rebuild(false) }
+
     function rebuild(resetSelection) {
         if (catalog.rowsLoaded && activeMenu !== "root" && !catalog.item(activeMenu)) {
             activeMenu = "root"
@@ -125,9 +127,20 @@ Item {
                        comment: query ? [path, description].filter(function(v) { return v }).join(" · ") : description,
                        order: entry.order || 0})
         }
+        if (query && (activeMenu === "root" || activeMenu === "apps")) {
+            for (var machine of virtualMachines.rows) {
+                var machineText = (machine.name + " virtual machine vm").toLowerCase()
+                if (!terms.every(function(term) { return machineText.indexOf(term) !== -1 })) continue
+                var verb = machine.state === "Stopped" ? "Start and open console" : machine.state === "Paused" ? "Resume and open console" : "Open console"
+                next.push({id:machine.id, kind:"vm", name:machine.name, uuid:machine.uuid, uri:machine.uri,
+                           glyph:"▣", comment:"Virtual machine · " + machine.state + " · " + verb, order:0})
+            }
+        }
         next.sort(function(a, b) {
             if (query) {
-                if ((a.kind === "app") !== (b.kind === "app")) return a.kind === "app" ? -1 : 1
+                var aLaunchable = a.kind === "app" || a.kind === "vm"
+                var bLaunchable = b.kind === "app" || b.kind === "vm"
+                if (aLaunchable !== bLaunchable) return aLaunchable ? -1 : 1
                 var aStarts = a.name.toLowerCase().indexOf(query) === 0
                 var bStarts = b.name.toLowerCase().indexOf(query) === 0
                 if (aStarts !== bStarts) return aStarts ? -1 : 1
@@ -206,7 +219,10 @@ Item {
         }
         var broker = decodeURIComponent(Qt.resolvedUrl("command-broker.py").toString().replace(/^file:\/\//, ""))
         close()
-        Quickshell.execDetached(["/usr/bin/python3", "-I", broker, mode, value])
+        if (entry.kind === "vm") {
+            virtualMachines.lastRefresh = 0
+            Quickshell.execDetached(["/usr/bin/timeout", "--kill-after=1s", "20s", "/usr/bin/python3", "-I", broker, "vm-open", entry.uri, entry.uuid])
+        } else Quickshell.execDetached(["/usr/bin/python3", "-I", broker, mode, value])
     }
 
     TextEdit { id: calculatorClipboard; visible: false; textFormat: TextEdit.PlainText }
@@ -224,6 +240,7 @@ Item {
         history = []
         activeMenu = "root"
         searchField.text = ""
+        virtualMachines.refresh()
         iconResolver.refresh()
         catalog.prepare()
         rebuild(true)

@@ -19,3 +19,7 @@ Added checks for linked roots/files/directories, named pipes, icon entry/byte/tr
 ## 1.1.2 checks
 
 Added menu owner/type/mode/size, symlink/FIFO, growth-during-read and hard-deadline tests. Installer tests now cover linked target/backup/snapshot paths, linked files, FIFOs, oversized existing files, target-directory replacement during publication and backup-directory replacement during snapshot creation. Writes remain on retained descriptors and outside sentinel files stay unchanged. The actual installed default and custom menus both pass the broker checks. Full QML and existing regression suites are rerun.
+
+## 1.3.0 checks
+
+Read-only discovery found the user's running VM on qemu:///system. Added mocked broker checks for stopped/running/paused/transitional states, rejected UUIDs and remote URIs, catalog limits, and fixed console argv. UI tests cover VM-name/alias search, category scope, status text, and dispatch. No real VM was started, resumed, or restarted by tests.

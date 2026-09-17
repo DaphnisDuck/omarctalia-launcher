@@ -1,3 +1,9 @@
+# 1.3.0 — Virtual machine search
+
+- Find local libvirt VMs by name or `vm`, with their current status shown.
+- Start stopped guests, resume paused guests, and open running guests in virt-manager without restarting.
+- Bound read-only discovery and validate local connection URIs and domain UUIDs before explicit launch actions.
+
 # 1.2.1 — Dotfiles custom-menu support
 
 - Allow an explicit real custom-menu path without following symlinks or relaxing file checks.

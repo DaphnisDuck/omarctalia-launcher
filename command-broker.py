@@ -7,6 +7,7 @@ import signal
 import stat
 import struct
 import time
+import uuid
 import json
 import os
 from pathlib import Path
@@ -238,8 +239,62 @@ def menu_sources(custom_path=None):
             print(json.dumps(result,ensure_ascii=True),flush=True)
     finally: signal.setitimer(signal.ITIMER_REAL,0)
 
+VM_URIS = ('qemu:///system', 'qemu:///session')
+
+def vm_connection(uri, readonly):
+    if uri not in VM_URIS: raise ValueError('Unsupported VM connection')
+    import libvirt
+    connection=libvirt.openReadOnly(uri) if readonly else libvirt.open(uri)
+    if connection is None: raise ValueError('VM connection unavailable')
+    return connection
+
+def vm_rows(uri):
+    if not os.access("/usr/bin/virt-manager",os.X_OK): return []
+    connection=vm_connection(uri, True)
+    try:
+        rows=[]
+        states={0:'Unknown',1:'Running',2:'Busy',3:'Paused',4:'Shutting down',5:'Stopped',6:'Crashed',7:'Suspended'}
+        domains=connection.listAllDomains(0)
+        if len(domains)>128: raise ValueError('Too many virtual machines')
+        for domain in domains:
+            name=domain.name()
+            if not name or len(name)>256 or any(ord(c)<32 for c in name): continue
+            identifier=str(uuid.UUID(domain.UUIDString()))
+            state=domain.state()[0]
+            rows.append({'id':'vm:'+uri+':'+identifier,'kind':'vm','name':name,
+                         'uuid':identifier,'uri':uri,'state':states.get(state,'Unknown')})
+        return sorted(rows,key=lambda row:row['name'].casefold())
+    finally: connection.close()
+
+def vm_open(uri, identifier):
+    if not os.access("/usr/bin/virt-manager",os.X_OK): raise ValueError("virt-manager is not installed")
+    # Only canonical UUIDs are passed to lookup and virt-manager, never names or commands.
+    if str(uuid.UUID(identifier))!=identifier: raise ValueError('Invalid VM identifier')
+    connection=vm_connection(uri,False)
+    try:
+        domain=connection.lookupByUUIDString(identifier)
+        state=domain.state()[0]
+        if state==5: domain.create()
+        elif state==3: domain.resume()
+        elif state not in (1,2): raise ValueError('VM is not ready to open')
+    finally: connection.close()
+    subprocess.Popen(['/usr/bin/virt-manager','--connect',uri,'--show-domain-console',identifier],
+                     env=ENV,stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+
 def main():
     mode=sys.argv[1]
+    if mode=='vm-list':
+        rows=vm_rows(sys.argv[2])
+        output=json.dumps(rows,ensure_ascii=True)
+        if len(output)>65536: raise ValueError('VM catalog too large')
+        print(output)
+        return 0
+    if mode=='vm-open':
+        try: vm_open(sys.argv[2],sys.argv[3])
+        except Exception:
+            run(['/usr/bin/notify-send','-a','Omarctalia Launcher','--','Could not open virtual machine','Check its state and connection in virt-manager.'])
+            raise
+        return 0
     if mode=='menus':
         menu_sources(sys.argv[2] if len(sys.argv) == 3 else None)
         return 0

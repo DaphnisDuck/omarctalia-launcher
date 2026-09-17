@@ -48,3 +48,7 @@ Calculator.js parses only a fixed arithmetic grammar, capped at 256 characters, 
 ## Explicit menu source (1.2.1)
 
 The trusted plugin setting customMenuPath can select an absolute real custom-menu file. It is passed as a separate broker argument, never as code, and cannot contain parent traversal. Owner/type/mode/link/size and deadline checks are unchanged. The default menu source is unchanged. The launcher does not discover or follow a symlink's target automatically.
+
+## Virtual machines (1.3.0)
+
+Automatic discovery uses a read-only libvirt connection in the broker, limited to qemu:///system or qemu:///session. QML enforces a five-second discovery deadline with one-second kill grace. Results are capped at 128 guests and 64 KiB; display names are length/control-character checked. Starting/resuming occurs only after selection, using a canonical UUID and a fresh domain-state check. Console launch uses fixed absolute virt-manager argv; names never become shell text. No sudo or remote connection is used. Tests mock all start/resume/console effects.

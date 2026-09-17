@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-RUNTIME = ['Launcher.qml','MenuCatalog.qml','IconResolver.qml','MenuModel.js','MenuDescriptions.js','Calculator.js','command-broker.py','CommandPolicy.json','CommandPolicy.js','manifest.json']
+RUNTIME = ['Launcher.qml','MenuCatalog.qml','IconResolver.qml','MenuModel.js','VirtualMachines.qml','MenuDescriptions.js','Calculator.js','command-broker.py','CommandPolicy.json','CommandPolicy.js','manifest.json']
 
 def qml_result(output):
     found = re.findall(r'OMARCTALIA_TEST_RESULT=(\{[^\n]+\})', output)
@@ -37,6 +37,7 @@ def main():
     subprocess.run(['/usr/bin/python3',str(ROOT/'tests/security_test.py')],check=True)
     subprocess.run(['node',str(ROOT/'tests/model.test.cjs')],check=True)
     subprocess.run(['node',str(ROOT/'tests/calculator.test.cjs')],check=True)
+    subprocess.run(['/usr/bin/python3',str(ROOT/'tests/vm_test.py')],check=True)
     subprocess.run(['python3',str(ROOT/'tests/installer_test.py')],check=True)
     with tempfile.TemporaryDirectory(prefix='omarctalia-test-') as folder:
         temp=Path(folder)
@@ -64,6 +65,8 @@ function cleanupTestCase() { console.log("OMARCTALIA_TEST_RESULT=" + JSON.string
         execute_qml(temp/name,dict(env,XDG_DATA_HOME=str(temp/'bad-data')))
         # Keep the production controls and handlers; replace only its Wayland surface
         # and external side effects. Test the real MenuCatalog separately above.
+        vm=(temp/'VirtualMachines.qml').read_text().replace('    function refresh() {','    function refresh() { return // Fixtures supply the VM catalog.')
+        (temp/'VirtualMachines.qml').write_text(vm)
         source=(ROOT/'Launcher.qml').read_text()
         source=source.replace('import QtQuick\n','import QtQuick\nimport QtTest\n',1)
         assert source.count('    PanelWindow {') == 1
