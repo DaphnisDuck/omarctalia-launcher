@@ -121,6 +121,16 @@ def install(target,backups):
                 value=json.loads(setting[2])
                 if not isinstance(value,str): raise ValueError('Invalid custom menu setting')
                 payload['MenuCatalog.qml']=re.sub(pattern,lambda m:m[1]+json.dumps(value).encode(),payload['MenuCatalog.qml'],count=1)
+        vm=previous['VirtualMachines.qml']
+        if vm:
+            setting=re.search(rb'property string connectionUri:\s*("(?:[^"\\]|\\.)*")',vm)
+            if setting:
+                value=json.loads(setting[1])
+                if value not in ('', 'qemu:///system', 'qemu:///session'):
+                    raise ValueError('Invalid VM connection setting')
+                payload['VirtualMachines.qml']=re.sub(
+                    rb'(property string connectionUri:\s*)("(?:[^"\\]|\\.)*")',
+                    lambda m:m[1]+json.dumps(value).encode(),payload['VirtualMachines.qml'],count=1)
         snapshot=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+secrets.token_hex(8)
         os.mkdir(snapshot,0o700,dir_fd=base); os.fsync(base)
         saved=os.open(snapshot,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=base)
@@ -153,14 +163,18 @@ def restore(backup,target,force=False):
         if record['target']!=str(target): raise RuntimeError('Backup belongs to another installation')
         info=os.fstat(dest)
         if 'targetIdentity' in record and record['targetIdentity']!=[info.st_dev,info.st_ino]: raise RuntimeError('Installation directory was replaced')
-        if set(record['before'])!=set(FILES) or set(record['after'])!=set(FILES): raise RuntimeError('Invalid backup file list')
+        before=record.get('before'); after=record.get('after')
+        if not isinstance(before,dict) or not isinstance(after,dict): raise RuntimeError('Invalid backup file list')
+        if not set(before) or set(before)-set(FILES) or set(after)-set(FILES) or set(after)-set(before):
+            raise RuntimeError('Invalid backup file list')
         previous={}
-        for name,checksum in record['before'].items():
+        for name in FILES:
+            checksum=before.get(name)
             data=read_file(saved,name) if checksum is not None else None
             if data is not None and digest(data)!=checksum: raise RuntimeError('Damaged backup: '+name)
             previous[name]=data
             current=read_file(dest,name,True)
-            if not force and (current is None or digest(current)!=record['after'][name]): raise RuntimeError('Installed file changed since this backup: '+name)
+            if name in after and not force and (current is None or digest(current)!=after[name]): raise RuntimeError('Installed file changed since this backup: '+name)
         write_previous(dest,previous)
     print('Restored the previous installation.')
 

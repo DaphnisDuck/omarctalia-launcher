@@ -1,3 +1,10 @@
+# 1.4.1 — Security and preference fixes
+
+- Render menu and application text as plain text so markup cannot trigger resource loads.
+- Preserve the configured VM connection during upgrades.
+- Restore snapshots from older runtime file sets while retaining strict validation.
+- Apply an external timeout to icon discovery.
+
 # 1.4.0 — Open web URLs
 
 - Recognize HTTP/HTTPS URLs and www. addresses in search.

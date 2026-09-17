@@ -321,6 +321,7 @@ Item {
                 spacing: 14
 
                 Text {
+                    textFormat: Text.PlainText
                     text: "Omarctalia Launcher" + (root.viModeEnabled ? "  ·  " + (root.insertMode ? "INSERT" : "NORMAL") : "")
                     color: root.secondaryText
                     font.pixelSize: 12
@@ -350,6 +351,7 @@ Item {
                         }
                     }
                     Text {
+                        textFormat: Text.PlainText
                         Layout.fillWidth: true
                         text: root.activeMenu === "root" ? "Home" : "Home › " + catalog.pathFor(root.activeMenu)
                         color: Color.menu.text
@@ -359,6 +361,7 @@ Item {
                 }
 
                 Text {
+                    textFormat: Text.PlainText
                     Layout.fillWidth: true
                     visible: text.length > 0
                     text: [catalog.statusMessage, iconResolver.statusMessage].filter(function(v) { return v }).join(" · ")
@@ -461,6 +464,7 @@ Item {
                                         asynchronous: true
                                     }
                                     Text {
+                                        textFormat: Text.PlainText
                                         anchors.centerIn: parent
                                         visible: appIcon.status !== Image.Ready
                                         text: row.modelData.glyph || String(row.modelData.name || "?").charAt(0).toUpperCase()
@@ -473,6 +477,7 @@ Item {
                                     Layout.fillWidth: true
                                     spacing: 3
                                     Text {
+                                        textFormat: Text.PlainText
                                         Layout.fillWidth: true
                                         text: row.modelData.name || row.modelData.id
                                         color: appList.currentIndex === row.index ? Color.menu.selectedText : Color.menu.text

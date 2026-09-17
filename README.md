@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.4.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.4.1**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 

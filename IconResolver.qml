@@ -69,7 +69,7 @@ Item {
         scanCount++
         // Paths are separate arguments, never interpolated into the shell script.
         var broker = decodeURIComponent(Qt.resolvedUrl("command-broker.py").toString().replace(/^file:\/\//, ""))
-        scan.command = ["/usr/bin/python3", "-I", broker, "icons"].concat(requested)
+        scan.command = ["/usr/bin/timeout", "--kill-after=1s", "12s", "/usr/bin/python3", "-I", broker, "icons"].concat(requested)
         scan.running = true
     }
 
