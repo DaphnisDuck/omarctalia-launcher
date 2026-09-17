@@ -2,7 +2,7 @@
 
 A searchable Omarchy menu and application launcher with optional vi navigation and live theme colors.
 
-Version **1.1.3**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
+Version **1.2.0**. Tested on this machine with the Omarchy **4.0.3-1** package, Quickshell **0.3.1**, and Qt **6.11.2**. Source: https://github.com/DaphnisDuck/omarctalia-launcher.
 
 ## Screenshots
 
@@ -39,6 +39,12 @@ property bool viModeEnabled: false
 ```
 
 Typing then searches immediately, and Escape closes directly. The installer preserves this setting. Other source edits are backed up but not automatically merged during upgrades.
+
+## Calculator
+
+Press `/` or `i` to search, then type an expression such as `(12 + 8) / 5`, `20% * 150`, or `sqrt(144)`. The answer appears first; Enter or a click copies just the answer and closes the launcher. With vi mode disabled, type directly.
+
+Supports `+`, `-`, `*`, `/`, `^` or `**`, parentheses, unary signs, percentages, scientific notation, `pi`, `e`, `sqrt()` and `abs()`. An optional leading `=` explicitly requests calculation. `%` divides the preceding value by 100: `100 + 20%` is `100.2`; use `100 * 1.2` for a 20% increase. Results display up to 12 significant digits using floating-point arithmetic. Incomplete or invalid expressions cannot be copied as results. Expressions are parsed locally with fixed limits; no JavaScript evaluation or shell execution is used.
 
 ## Theme integration
 

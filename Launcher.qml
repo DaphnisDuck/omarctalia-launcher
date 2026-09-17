@@ -5,6 +5,7 @@ import QtQuick.Layouts
 
 import Quickshell
 import "MenuDescriptions.js" as MenuDescriptions
+import "Calculator.js" as Calculator
 import qs.Commons
 import Quickshell.Wayland
 
@@ -134,6 +135,10 @@ Item {
             if (a.kind === "app" && b.kind === "app") return a.name.localeCompare(b.name) || a.id.localeCompare(b.id)
             return a.order - b.order
         })
+        var calculation = Calculator.calculate(searchField.text)
+        if (calculation) next.unshift({id: "calculator-result", kind: calculation.error ? "calculator-error" : "calculator",
+            name: calculation.error || calculation.value, value: calculation.value || "", glyph: "=",
+            comment: calculation.error ? "Calculator · + − × / ^ % and parentheses" : "Calculator · Enter or click to copy"})
         results = next
         var index = resetSelection ? -1 : next.findIndex(function(entry) { return entry.id === selectedId })
         appList.currentIndex = next.length ? Math.max(0, index) : -1
@@ -181,6 +186,14 @@ Item {
     function launch(index) {
         if (!opened || index < 0 || index >= results.length) return
         var entry = results[index]
+        if (entry.kind === "calculator-error") return
+        if (entry.kind === "calculator") {
+            calculatorClipboard.text = entry.value
+            calculatorClipboard.selectAll()
+            calculatorClipboard.copy()
+            close()
+            return
+        }
         if (entry.kind === "menu" || entry.kind === "link") {
             enterMenu(entry.target || entry.id)
             return
@@ -195,6 +208,8 @@ Item {
         close()
         Quickshell.execDetached(["/usr/bin/python3", "-I", broker, mode, value])
     }
+
+    TextEdit { id: calculatorClipboard; visible: false; textFormat: TextEdit.PlainText }
 
     IconResolver { id: iconResolver }
 

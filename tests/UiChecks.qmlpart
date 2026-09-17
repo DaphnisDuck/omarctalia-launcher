@@ -17,6 +17,26 @@
             compare(results[0].appId, "chromium")
             compare(appList.currentIndex, 0)
         }
+        function test_calculator() {
+            searchField.text = "(12 + 8) / 5"
+            compare(results[0].kind, "calculator")
+            compare(results[0].name, "4")
+            compare(appList.currentIndex, 0)
+            var beforeDispatch = JSON.stringify(lastDispatch)
+            keyClick(Qt.Key_Return)
+            compare(root.opened, false)
+            compare(JSON.stringify(lastDispatch), beforeDispatch)
+            calculatorClipboard.text = ""
+            calculatorClipboard.paste()
+            compare(calculatorClipboard.text, "4")
+            root.open("{}")
+            searchField.text = "1 / 0"
+            compare(results[0].kind, "calculator-error")
+            root.launch(0)
+            verify(root.opened)
+            searchField.text = "chromium"
+            verify(!results.some(function(e) { return e.kind === "calculator" || e.kind === "calculator-error" }))
+        }
         function test_menu() {
 
             root.open("{}")

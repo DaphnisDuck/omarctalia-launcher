@@ -40,3 +40,7 @@ FileView no longer loads menu files. A periodic timer requests an isolated broke
 The optional installer uses lexical paths, never target resolve(). It retains no-follow directory descriptors for source, target and snapshots. All file reads, exclusive temporary creation, rename and unlink operations are relative to those descriptors. Existing reads are limited to 2 MiB and require regular, single-link, current-user-owned files without group/world write bits. Destination/snapshot directories must be owned by the user and not group/world writable. Published files and directories are fsynced. Restore validates the complete bounded snapshot into memory before mutation and, for new snapshots, verifies the recorded target directory identity. Automatic rollback uses the same retained destination descriptor.
 
 A directory renamed after opening remains the same filesystem object; writes stay on that retained object rather than following a replacement pathname. This does not protect against an actor who can directly modify the plugin's own trusted code or the contents of the retained directories as the same user.
+
+## Calculator (1.2.0)
+
+Calculator.js parses only a fixed arithmetic grammar, capped at 256 characters, 128 tokens and 32 nested operations. It cannot access JavaScript objects, evaluate code, or invoke processes. Results must be finite. Clipboard writes occur only on selection, through Qt TextEdit.copy(), and contain only the formatted numeric result.

@@ -1,3 +1,9 @@
+# 1.2.0 — Search calculator
+
+- Show arithmetic answers directly in search, including powers, percentages, parentheses, sqrt and abs.
+- Enter or click copies the answer using Qt's clipboard and closes the launcher.
+- Use a bounded arithmetic parser with no eval or shell execution; preserve ordinary application searches.
+
 # 1.1.3 — Application search priority
 
 - Rank matching applications before menu commands and categories, so searching Chromium puts the application before default-browser settings.
