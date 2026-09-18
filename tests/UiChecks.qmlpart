@@ -7,6 +7,23 @@
         name: "LauncherIntegration"
         when: root.opened
         function init() { root.viModeEnabled = true; root.open("{}"); wait(50) }
+        function test_untrusted_text_is_literal() {
+            var markup = '<b>Example</b><img src="http://127.0.0.1:9/audit-marker">'
+            root.results = [{id:"audit",kind:"app",name:markup,comment:markup,glyph:"X",icon:""}]
+            appList.currentIndex = 0
+            tryVerify(function() { return appList.currentItem !== null })
+            wait(50)
+            var found = 0
+            function inspect(item) {
+                if (item.text === markup) {
+                    compare(item.textFormat, Text.PlainText)
+                    found++
+                }
+                for (var child of item.children || []) inspect(child)
+            }
+            inspect(appList.currentItem)
+            compare(found, 2)
+        }
         function test_application_search_priority() {
             tryVerify(function() { return catalog.item("setup.default.browser.chromium") !== null }, 4000)
             catalog.whenResults = {"setup.default.browser.chromium": true}

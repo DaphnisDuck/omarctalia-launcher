@@ -165,16 +165,22 @@ def restore(backup,target,force=False):
         if 'targetIdentity' in record and record['targetIdentity']!=[info.st_dev,info.st_ino]: raise RuntimeError('Installation directory was replaced')
         before=record.get('before'); after=record.get('after')
         if not isinstance(before,dict) or not isinstance(after,dict): raise RuntimeError('Invalid backup file list')
-        if not set(before) or set(before)-set(FILES) or set(after)-set(FILES) or set(after)-set(before):
+        known_sets = [set(FILES)]
+        for added in ('UrlSearch.js', 'VirtualMachines.qml', 'Calculator.js'):
+            known_sets.append(known_sets[-1] - {added})
+        if set(before) != set(after) or set(before) not in known_sets:
             raise RuntimeError('Invalid backup file list')
+        for name in before:
+            if (before[name] is not None and (not isinstance(before[name],str) or not re.fullmatch('[0-9a-f]{64}',before[name]))) or not isinstance(after[name],str) or not re.fullmatch('[0-9a-f]{64}',after[name]):
+                raise RuntimeError('Invalid backup checksum')
         previous={}
-        for name in FILES:
-            checksum=before.get(name)
+        # Historical snapshots own only their recorded files. Preserve newer files.
+        for name,checksum in before.items():
             data=read_file(saved,name) if checksum is not None else None
             if data is not None and digest(data)!=checksum: raise RuntimeError('Damaged backup: '+name)
             previous[name]=data
             current=read_file(dest,name,True)
-            if name in after and not force and (current is None or digest(current)!=after[name]): raise RuntimeError('Installed file changed since this backup: '+name)
+            if not force and (current is None or digest(current)!=after[name]): raise RuntimeError('Installed file changed since this backup: '+name)
         write_previous(dest,previous)
     print('Restored the previous installation.')
 

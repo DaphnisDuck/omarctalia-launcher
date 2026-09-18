@@ -487,6 +487,7 @@ Item {
                                     Text {
                                         Layout.fillWidth: true
                                         text: row.modelData.comment || "Run " + row.modelData.name
+                                        textFormat: Text.PlainText
                                         color: appList.currentIndex === row.index ? Util.alpha(Color.menu.selectedText, 0.75) : root.secondaryText
                                         font.pixelSize: 12
                                         elide: Text.ElideRight

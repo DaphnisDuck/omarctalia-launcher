@@ -1,5 +1,9 @@
 # Version 1.1.0 validation
 
+## 1.4.1 checks
+
+Full regression suite and Omarchy manifest validation pass. Added actual result-delegate checks for literal markup in names and descriptions, upgrade tests for disabled/session VM connections, and restore tests for all three historical runtime file sets. Historical restore preserves newer files and rejects unknown file lists. Icon discovery now uses an external timeout.
+
 Validated on 2026-09-11 with Omarchy 4.0.3-1 and Quickshell 0.3.1.
 
 - Omarchy manifest validation passes.

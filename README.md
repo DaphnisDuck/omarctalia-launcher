@@ -141,7 +141,7 @@ The installer prints the exact snapshot directory. Restore it from this source f
 python3 install.py --restore /absolute/path/to/snapshot
 ```
 
-Restore validates the backup and refuses to overwrite files edited after the installation. Save those edits before using `--force`. Legacy timestamped backups from earlier development remain in the installed folder.
+Restore validates the backup and refuses to overwrite files edited after the installation. Save those edits before using `--force`. Known historical runtime file lists are supported; files introduced after a snapshot are preserved because that snapshot has no evidence about their contents. Legacy timestamped backups from earlier development remain in the installed folder.
 
 ## Tests and maintenance
 

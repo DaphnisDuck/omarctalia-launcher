@@ -96,3 +96,29 @@ with tempfile.TemporaryDirectory(prefix='omarctalia-path-preference-') as d:
     installer.install(target,root/'backups')
     assert 'property string customMenuPath: '+json.dumps(configured) in (target/'MenuCatalog.qml').read_text()
 print('PASS: explicit menu path preference survives upgrades')
+
+for connection in ['', 'qemu:///session']:
+    with tempfile.TemporaryDirectory(prefix='omarctalia-vm-preference-') as d:
+        root=Path(d); target=root/'plugin'; target.mkdir()
+        (target/'VirtualMachines.qml').write_text('property string connectionUri: '+json.dumps(connection))
+        installer.install(target,root/'backups')
+        assert 'property string connectionUri: '+json.dumps(connection) in (target/'VirtualMachines.qml').read_text()
+print('PASS: disabled and session VM preferences survive upgrades')
+
+for omitted in [('UrlSearch.js',), ('UrlSearch.js','VirtualMachines.qml'), ('UrlSearch.js','VirtualMachines.qml','Calculator.js')]:
+    with tempfile.TemporaryDirectory(prefix='omarctalia-historical-') as d:
+        root=Path(d); target=root/'plugin'; target.mkdir()
+        (target/'Launcher.qml').write_text('original launcher')
+        backup=installer.install(target,root/'backups')
+        record=json.loads((backup/'snapshot.json').read_text())
+        for name in omitted:
+            record['before'].pop(name); record['after'].pop(name)
+            (target/name).write_text('newer personal edit')
+        (backup/'snapshot.json').write_text(json.dumps(record))
+        installer.restore(backup,target)
+        assert (target/'Launcher.qml').read_text()=='original launcher'
+        assert all((target/name).read_text()=='newer personal edit' for name in omitted)
+        record['before'].pop('Launcher.qml'); record['after'].pop('Launcher.qml')
+        (backup/'snapshot.json').write_text(json.dumps(record))
+        rejects(lambda: installer.restore(backup,target,force=True))
+print('PASS: known historical backups restore, preserve newer files, and reject unknown file sets')
